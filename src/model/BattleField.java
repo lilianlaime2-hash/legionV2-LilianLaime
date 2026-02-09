@@ -1,6 +1,5 @@
 package model;
 
-
 import sort.InsertionSort;
 
 import java.util.ArrayList;
@@ -24,36 +23,28 @@ public class BattleField {
     public void placeCharacter (Character character, int row, int column){
         Cell cell = getCell(row, column);
         cell.setCharacter(character);
-
     }
 
     public Cell getCell (int rows, int columns){
-       return fieldMatrix[rows][columns];
+        return fieldMatrix[rows][columns];
     }
 
     public void sortMatrix(Comparator<Character> comparator, Orientation orientation){
         List<Character> troops = new ArrayList<>();
 
-        for (int i=0; i<fieldMatrix.length; i++){
-            for (int j = 0; j<fieldMatrix[i].length; j++ ){
+        for (int i = 0; i < fieldMatrix.length; i++){
+            for (int j = 0; j < fieldMatrix[i].length; j++ ){
                 Cell cell = fieldMatrix[i][j];
-
                 if (!cell.isEmpty()){
                     troops.add(cell.getCharacter());
                 }
             }
         }
 
-        //System.out.println("\nList before sorting");
-        //System.out.println(troops);
-
-        //System.out.println("\nList after sorting");
         InsertionSort<Character> insertionSort = new InsertionSort<>();
         insertionSort.sort(troops, comparator);
-        //System.out.println(troops);
 
         fillSorted(troops, orientation);
-
     }
 
     private void fillSorted(List<Character> troops, Orientation orientation) {
@@ -68,19 +59,20 @@ public class BattleField {
 
         clearMatrix();
 
-        for (Character troop: troops){
+        for (Character troop : troops){
 
             if (troop.getType() != prevType){
-                line ++;
+                line++;
                 position = 0;
                 prevType = troop.getType();
             }
 
-            int row=0;
-            int col=0;
+            int row = 0;
+            int col = 0;
+
             switch (orientation){
                 case EAST:
-                    row = (size -1) - position;
+                    row = (size - 1) - position;
                     col = line;
                     break;
                 case WEST:
@@ -91,12 +83,12 @@ public class BattleField {
                     row = (size - 1) - line;
                     col = position;
                     break;
-
                 case SOUTH:
                     row = line;
                     col = position;
                     break;
             }
+
             if (row < 0 || row >= size || col < 0 || col >= size) {
                 position++;
                 continue;
@@ -105,7 +97,6 @@ public class BattleField {
             fieldMatrix[row][col].setCharacter(troop);
             position++;
         }
-
     }
 
     private void clearMatrix() {
@@ -120,7 +111,7 @@ public class BattleField {
         for (int i = 0; i < fieldMatrix.length ; i++){
             for (int j = 0; j < fieldMatrix[i].length; j++){
                 if (this.getCell(i, j).isEmpty()){
-                    System.out.print(" . ");
+                    System.out.print(" * ");
                 } else {
                     System.out.print(" " + getCell(i,j).getCharacter() + " ");
                 }
@@ -128,7 +119,4 @@ public class BattleField {
             System.out.println();
         }
     }
-
 }
-
-

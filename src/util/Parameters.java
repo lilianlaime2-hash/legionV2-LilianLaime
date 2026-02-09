@@ -7,36 +7,39 @@ import java.util.Arrays;
 
 public class Parameters {
 
-    public Algorithm algorithm;
+    public Algorithm a;
     public String t;
-    public Orientation orientation;
+    public Orientation o = Orientation.SOUTH;
     public int[] u;
     public int f = 6;
 
     public Boolean aValid;
     public Boolean tValid;
     public Boolean uValid;
-    public Boolean fValid;
+    public Boolean fValid = true;
     public Boolean oValid;
-
-    public String invalidField;
-    public String errorMessage;
 
     public boolean validate(String[] args) {
 
         if (args == null || args.length == 0) {
-            invalidField = "Arguments";
-            errorMessage = "Arguments are invalid";
-            return false;
+            aValid = null;
+            tValid = null;
+            uValid = null;
+            fValid = null;
+            oValid = null;
+            return true;
         }
 
-        for (String arg: args) {
+        for (String arg : args) {
 
             String[] parts = arg.split("=");
             if (parts.length != 2) {
-                invalidField = "Arguments";
-                errorMessage = "Arguments format is invalid";
-                return false;
+                aValid = false;
+                tValid = false;
+                uValid = false;
+                fValid = true;
+                oValid = true;
+                continue;
             }
 
             String key = parts[0].trim().toLowerCase();
@@ -46,9 +49,9 @@ public class Parameters {
 
                 case "a":
                     try {
-                        algorithm = Algorithm.fromSymbol(value);
+                        a = Algorithm.fromSymbol(value);
                         aValid = true;
-                    } catch (IllegalArgumentException e) {
+                    } catch (Exception e) {
                         aValid = false;
                     }
                     break;
@@ -64,11 +67,10 @@ public class Parameters {
 
                 case "o":
                     try {
-                        orientation = Orientation.fromSymbol(value);
-                    } catch (IllegalArgumentException e) {
-                        invalidField = "Orientation";
-                        errorMessage = "Value of Orientation is invalid";
-                        return false;
+                        o = Orientation.fromSymbol(value);
+                        oValid = true;
+                    } catch (Exception e) {
+                        oValid = false;
                     }
                     break;
 
@@ -87,16 +89,16 @@ public class Parameters {
                 case "f":
                     try {
                         f = Integer.parseInt(value);
-                        fValid = f >= 5 && f <= 1000;
+                        if (f >= 5 && f <= 1000) {
+                            fValid = true;
+                        } else {
+                            fValid = false;
+                        }
                     } catch (Exception e) {
                         fValid = false;
                     }
                     break;
 
-                default:
-                    invalidField = "Arguments";
-                    errorMessage = "Unknown argument";
-                    return false;
             }
         }
 
@@ -104,9 +106,17 @@ public class Parameters {
     }
 
     public void printState() {
-        System.out.println("Algorithm: [" + showState(aValid, algorithm != null ? algorithm.getLongName() : "") + "]");
+
+        System.out.println("Algorithm: [" + showState(aValid, a != null ? a.getLongName() : "") + "]");
         System.out.println("Type: [" + showState(tValid, t != null ? (t.equals("c") ? "Character" : "Number") : "") + "]");
-        System.out.println("Troops: [" + showState(uValid, u != null ? String.valueOf(Arrays.stream(u).sum()) : "") + "]");
+        System.out.println("Orientation: [" + showState(oValid, o != null ? o.getLongName() : "") + "]");
+
+        int troopsCount = 0;
+        if (u != null) {
+            for (int x : u) troopsCount += x;
+        }
+
+        System.out.println("Troops: [" + showState(uValid, u != null ? String.valueOf(troopsCount) : "") + "]");
         System.out.println("Battlefield: [" + showState(fValid, f + " x " + f) + "]");
     }
 
@@ -119,6 +129,4 @@ public class Parameters {
         }
         return value;
     }
-
-
 }

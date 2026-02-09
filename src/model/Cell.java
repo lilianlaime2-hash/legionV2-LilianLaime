@@ -1,6 +1,7 @@
 package model;
 
 public class Cell {
+
     private int row;
     private int column;
     private Character character = null;
