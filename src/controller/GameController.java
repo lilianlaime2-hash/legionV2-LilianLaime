@@ -51,6 +51,19 @@ public class GameController {
         battleField.sortMatrix(comparator(), parameters.orientation);
         battleField.showBattleField();
 
+
+        parameters.validate(args);
+        parameters.printState();
+
+        if (Boolean.FALSE.equals(parameters.aValid)
+                || Boolean.FALSE.equals(parameters.tValid)
+                || Boolean.FALSE.equals(parameters.uValid)
+                || Boolean.FALSE.equals(parameters.fValid)) {
+
+            System.out.println("\nInvalid values.");
+            return;
+        }
+
     }
 
     private List<Character> buildTroops() {
@@ -120,4 +133,7 @@ public class GameController {
 
 
     }
+
+
+
 }

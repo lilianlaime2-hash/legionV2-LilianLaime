@@ -13,6 +13,12 @@ public class Parameters {
     public int[] u;
     public int f = 6;
 
+    public Boolean aValid;
+    public Boolean tValid;
+    public Boolean uValid;
+    public Boolean fValid;
+    public Boolean oValid;
+
     public String invalidField;
     public String errorMessage;
 
@@ -41,23 +47,20 @@ public class Parameters {
                 case "a":
                     try {
                         algorithm = Algorithm.fromSymbol(value);
+                        aValid = true;
                     } catch (IllegalArgumentException e) {
-                        invalidField = "Algorithm";
-                        errorMessage = "Value of Algorithm is invalid";
-                        return false;
+                        aValid = false;
                     }
-
                     break;
 
                 case "t":
-                    if (!value.equals("c") && !value.equals("n")) {
-                        invalidField = "Type";
-                        errorMessage = "Value of Type is invalid";
-                        return false;
+                    if (value.equals("c") || value.equals("n")) {
+                        t = value;
+                        tValid = true;
+                    } else {
+                        tValid = false;
                     }
-                    t = value;
                     break;
-
 
                 case "o":
                     try {
@@ -72,31 +75,21 @@ public class Parameters {
                 case "u":
                 case "r":
                     try {
-                        u = Arrays.stream(value.split(",")).mapToInt(Integer::parseInt).toArray();
-                    } catch (NumberFormatException e) {
-                        invalidField = "Troops";
-                        errorMessage = "Value of Troops is invalid";
-                        return false;
-                    }
-                    if (u.length == 0) {
-                        invalidField = "Troops";
-                        errorMessage = "Value of Troops is invalid";
-                        return false;
+                        u = Arrays.stream(value.split(","))
+                                .mapToInt(Integer::parseInt)
+                                .toArray();
+                        uValid = true;
+                    } catch (Exception e) {
+                        uValid = false;
                     }
                     break;
 
                 case "f":
                     try {
                         f = Integer.parseInt(value);
-                    } catch (NumberFormatException e) {
-                        invalidField = "Battlefield";
-                        errorMessage = "Value of Battlefield size is invalid";
-                        return false;
-                    }
-                    if (f < 5 || f > 1000) {
-                        invalidField = "Battlefield";
-                        errorMessage = "Value of Battlefield size is invalid";
-                        return false;
+                        fValid = f >= 5 && f <= 1000;
+                    } catch (Exception e) {
+                        fValid = false;
                     }
                     break;
 
@@ -109,4 +102,23 @@ public class Parameters {
 
         return true;
     }
+
+    public void printState() {
+        System.out.println("Algorithm: [" + showState(aValid, algorithm != null ? algorithm.getLongName() : "") + "]");
+        System.out.println("Type: [" + showState(tValid, t != null ? (t.equals("c") ? "Character" : "Number") : "") + "]");
+        System.out.println("Troops: [" + showState(uValid, u != null ? String.valueOf(Arrays.stream(u).sum()) : "") + "]");
+        System.out.println("Battlefield: [" + showState(fValid, f + " x " + f) + "]");
+    }
+
+    private String showState(Boolean valid, String value) {
+        if (valid == null) {
+            return "Not present";
+        }
+        if (!valid) {
+            return "Invalid";
+        }
+        return value;
+    }
+
+
 }

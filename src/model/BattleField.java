@@ -44,13 +44,13 @@ public class BattleField {
             }
         }
 
-        System.out.println("\nList before sorting");
-        System.out.println(troops);
+        //System.out.println("\nList before sorting");
+        //System.out.println(troops);
 
-        System.out.println("\nList after sorting");
+        //System.out.println("\nList after sorting");
         InsertionSort<Character> insertionSort = new InsertionSort<>();
         insertionSort.sort(troops, comparator);
-        System.out.println(troops);
+        //System.out.println(troops);
 
         fillSorted(troops, orientation);
 
