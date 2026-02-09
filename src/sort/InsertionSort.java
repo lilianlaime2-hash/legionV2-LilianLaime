@@ -1,21 +1,26 @@
 package sort;
 
-import model.Character;
+
+import java.util.Comparator;
 import java.util.List;
 
-public class InsertionSort implements SortStrategy {
+public class InsertionSort <T> implements SortStrategy <T> {
+
 
     @Override
-    public void sort(List<Character> troops) {
-        for (int i = 1; i < troops.size(); i++) {
-            Character key = troops.get(i);
+    public void sort (List<T> list, Comparator<T> comparator) {
+        int n = list.size();
+
+        for (int i = 1; i < n; i++){
+            T key = list.get(i);
             int j = i - 1;
 
-            while (j >= 0 && troops.get(j).getRank() > key.getRank()) {
-                troops.set(j + 1, troops.get(j));
+            while (j >= 0 && comparator.compare(list.get(j), key) > 0){
+                list.set(j+1, list.get(j));
                 j--;
             }
-            troops.set(j + 1, key);
+
+            list.set(j+1, key);
         }
     }
 }

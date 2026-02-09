@@ -1,29 +1,23 @@
 package model;
 
 public abstract class Character {
+    private int health;
+    private int speed;
+    private int rank;
+    private int row;
+    private int column;
+    private final TroopType type;
 
-    protected int health;
-    protected int speed;
-    protected int rank;
-    protected int row;
-    protected int column;
-
-    public abstract void act();
-
-    public void move(int row, int column) {
-        this.row = row;
-        this.column = column;
+    public Character(TroopType type) {
+        this.type = type;
     }
 
-    public void takeDamage(int damage) {
-        health = Math.max(0, health - damage);
+    @Override
+    public String toString(){
+        return String.valueOf(type.getSymbol());
     }
 
-    public boolean isAlive() {
-        return health > 0;
-    }
-
-    public int getRank() {
-        return rank;
+    public TroopType getType() {
+        return type;
     }
 }
