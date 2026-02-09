@@ -17,18 +17,13 @@ public class GameController {
         parameters.validate(args);
         parameters.printState();
 
-        if (Boolean.FALSE.equals(parameters.aValid)
-                || Boolean.FALSE.equals(parameters.tValid)
-                || Boolean.FALSE.equals(parameters.uValid)
-                || Boolean.FALSE.equals(parameters.fValid)) {
+        if (Boolean.FALSE.equals(parameters.aValid) || Boolean.FALSE.equals(parameters.tValid) || Boolean.FALSE.equals(parameters.uValid) || Boolean.FALSE.equals(parameters.fValid)) {
 
-            System.out.println("\nInvalid values.");
+            System.out.println("Error: \"Invalid arguments\"");
             return;
         }
 
-        if (parameters.a == null
-                || parameters.t == null
-                || parameters.u == null) {
+        if (parameters.a == null || parameters.t == null || parameters.u == null) {
             return;
         }
 
@@ -39,7 +34,19 @@ public class GameController {
         }
 
         if (totalTroops > battlefieldSize) {
-            System.out.println("\nInvalid values.");
+            System.out.println();
+            System.out.println("Error: \"invalid battlefield size\"");
+            return;
+        }
+
+        int requiredLines = 0;
+        for (int amount : parameters.u) {
+            requiredLines += (int) Math.ceil((double) amount / parameters.f);
+        }
+
+        if (requiredLines > parameters.f) {
+            System.out.println();
+            System.out.println("Error: \"invalid battlefield size\"");
             return;
         }
 
@@ -50,11 +57,11 @@ public class GameController {
         placeRandom(battleField, troops);
 
         System.out.println("\nInitial Position:");
-        battleField.showBattleField();
+        battleField.showBattleField(parameters.t);
 
         System.out.println("\nFinal Position:");
         battleField.sortMatrix(comparator(), parameters.o);
-        battleField.showBattleField();
+        battleField.showBattleField(parameters.t);
     }
 
     private List<Character> buildTroops() {

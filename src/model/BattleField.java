@@ -61,7 +61,12 @@ public class BattleField {
 
         for (Character troop : troops){
 
-            if (troop.getType() != prevType){
+            if (position >= size) {
+                line++;
+                position = 0;
+            }
+
+            if (troop.getType() != prevType) {
                 line++;
                 position = 0;
                 prevType = troop.getType();
@@ -107,13 +112,18 @@ public class BattleField {
         }
     }
 
-    public void showBattleField(){
+    public void showBattleField(String type){
         for (int i = 0; i < fieldMatrix.length ; i++){
             for (int j = 0; j < fieldMatrix[i].length; j++){
                 if (this.getCell(i, j).isEmpty()){
                     System.out.print(" * ");
                 } else {
-                    System.out.print(" " + getCell(i,j).getCharacter() + " ");
+                    Character c = getCell(i,j).getCharacter();
+                    if (type.equals("n")){
+                        System.out.print(" " + c.getType().getValue() + " ");
+                    } else {
+                        System.out.print(" " + c + " ");
+                    }
                 }
             }
             System.out.println();
