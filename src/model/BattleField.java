@@ -42,9 +42,17 @@ public class BattleField {
         }
 
         InsertionSort<Character> insertionSort = new InsertionSort<>();
+
+        System.out.println("\nTroops before");
+        System.out.println(troops);
+
+
         insertionSort.sort(troops, comparator);
+        System.out.println("\nTroops after");
+        System.out.println(troops);
 
         fillSorted(troops, orientation);
+
     }
 
     private void fillSorted(List<Character> troops, Orientation orientation) {

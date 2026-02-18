@@ -6,7 +6,7 @@ public class Main {
         GameController game1 = new GameController();
         game1.startGame(args);
 
-        // a=i t=c o=s u=1,2,5,5,10 f=10
         // a=i t=c u=1,2,5,5,10
+        // a=i t=c u=3,2,2,1,1
     }
 }
