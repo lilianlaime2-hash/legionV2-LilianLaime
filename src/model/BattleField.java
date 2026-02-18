@@ -75,7 +75,9 @@ public class BattleField {
             }
 
             if (troop.getType() != prevType) {
-                line++;
+                if (position != 0) {
+                    line++;
+                }
                 position = 0;
                 prevType = troop.getType();
             }
@@ -128,9 +130,9 @@ public class BattleField {
                 } else {
                     Character c = getCell(i,j).getCharacter();
                     if (type.equals("n")){
-                        System.out.print(" " + c.getType().getValue() + " ");
+                        System.out.print(" " + c.getValue() + " ");
                     } else {
-                        System.out.print(" " + c + " ");
+                        System.out.print(" " + c.getType().toMappedChar(c.getValue()) + " ");
                     }
                 }
             }

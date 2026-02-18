@@ -1,7 +1,7 @@
 package model;
 
 public class Medic extends Character {
-    public Medic(){
-        super(TroopType.MEDIC);
+    public Medic(int value) {
+        super(TroopType.MEDIC, value);
     }
 }

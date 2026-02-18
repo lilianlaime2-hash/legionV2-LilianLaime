@@ -35,7 +35,8 @@ public class GameController {
 
         if (totalTroops > battlefieldSize) {
             System.out.println();
-            System.out.println("Error: \"invalid battlefield size\"");
+            System.out.println("Error: \"Too many troops for battlefield size\"");
+            System.out.println("Troops: " + totalTroops + "\nCapacity: " + battlefieldSize);
             return;
         }
 
@@ -46,7 +47,7 @@ public class GameController {
 
         if (requiredLines > parameters.f) {
             System.out.println();
-            System.out.println("Error: \"invalid battlefield size\"");
+            System.out.println("Error: \"Troop distribution exceeds battlefield height\"");
             return;
         }
 
@@ -65,24 +66,43 @@ public class GameController {
     }
 
     private List<Character> buildTroops() {
+
         List<Character> troops = new ArrayList<>();
 
-        if (parameters.u.length > 0)
-            for (int i = 0; i < parameters.u[0]; i++) troops.add(new Commander());
+        TroopType[] types = TroopType.values();
 
-        if (parameters.u.length > 1)
-            for (int i = 0; i < parameters.u[1]; i++) troops.add(new Medic());
+        for (int i = 0; i < parameters.u.length && i < types.length; i++) {
 
-        if (parameters.u.length > 2)
-            for (int i = 0; i < parameters.u[2]; i++) troops.add(new Tank());
+            TroopType type = types[i];
+            int amount = parameters.u[i];
 
-        if (parameters.u.length > 3)
-            for (int i = 0; i < parameters.u[3]; i++) troops.add(new Sniper());
+            for (int j = 0; j < amount; j++) {
 
-        if (parameters.u.length > 4)
-            for (int i = 0; i < parameters.u[4]; i++) troops.add(new Infantry());
+                int value = type.getMin() + j;
+
+                troops.add(createCharacter(type, value));
+            }
+        }
 
         return troops;
+    }
+
+    private Character createCharacter(TroopType type, int value) {
+
+        switch (type) {
+            case COMMANDER:
+                return new Commander(value);
+            case MEDIC:
+                return new Medic(value);
+            case TANK:
+                return new Tank(value);
+            case SNIPER:
+                return new Sniper(value);
+            case INFANTRY:
+                return new Infantry(value);
+            default:
+                throw new IllegalArgumentException("Unknown type");
+        }
     }
 
     private Comparator<Character> comparator() {
@@ -92,7 +112,7 @@ public class GameController {
                 if (parameters.t.equals("c")) {
                     return a.getType().compareTo(b.getType());
                 } else {
-                    return a.getType().getValue() - b.getType().getValue();
+                    return a.getValue() - b.getValue();
                 }
             }
         };

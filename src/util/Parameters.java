@@ -11,7 +11,7 @@ public class Parameters {
     public String t;
     public Orientation o = Orientation.SOUTH;
     public int[] u;
-    public int f = 6;
+    public int f = 10;
 
     public Boolean aValid;
     public Boolean tValid;
@@ -78,6 +78,7 @@ public class Parameters {
                 case "r":
                     try {
                         u = Arrays.stream(value.split(","))
+                                .map(String::trim)
                                 .mapToInt(Integer::parseInt)
                                 .toArray();
                         uValid = true;
