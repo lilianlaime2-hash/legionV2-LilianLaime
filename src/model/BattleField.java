@@ -130,9 +130,9 @@ public class BattleField {
                 } else {
                     Character c = getCell(i,j).getCharacter();
                     if (type.equals("n")){
-                        System.out.print(" " + c.getValue() + " ");
+                        System.out.print(" " + c.getType().getMin() + " ");
                     } else {
-                        System.out.print(" " + c.getType().toMappedChar(c.getValue()) + " ");
+                        System.out.print(" " + c + " ");
                     }
                 }
             }
