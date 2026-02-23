@@ -1,61 +1,44 @@
 package model;
 
-import sort.InsertionSort;
-
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class BattleField {
 
-    private Cell fieldMatrix[][];
+    private final Cell[][] grid;
 
-    public BattleField (int rows, int columns){
+    public BattleField(int size) {
 
-        fieldMatrix = new Cell[rows][columns];
-        for (int i = 0; i < rows; i++){
-            for (int j = 0; j < columns; j++){
-                fieldMatrix[i][j] = new Cell(i, j);
+        grid = new Cell[size][size];
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                grid[i][j] = new Cell();
             }
         }
     }
 
-    public void placeCharacter (Character character, int row, int column){
-        Cell cell = getCell(row, column);
-        cell.setCharacter(character);
+    public int getSize() {
+        return grid.length;
     }
 
-    public Cell getCell (int rows, int columns){
-        return fieldMatrix[rows][columns];
+    public Cell getCell(int row, int column) {
+        return grid[row][column];
     }
 
-    public void sortMatrix(Comparator<Character> comparator, Orientation orientation){
-        List<Character> troops = new ArrayList<>();
+    public void placeCharacter(Character character, int row, int column) {
+        grid[row][column].setCharacter(character);
+    }
 
-        for (int i = 0; i < fieldMatrix.length; i++){
-            for (int j = 0; j < fieldMatrix[i].length; j++ ){
-                Cell cell = fieldMatrix[i][j];
-                if (!cell.isEmpty()){
-                    troops.add(cell.getCharacter());
-                }
+    public void clear() {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                grid[i][j].setCharacter(null);
             }
         }
-
-        InsertionSort<Character> insertionSort = new InsertionSort<>();
-
-        System.out.println("\nTroops before");
-        System.out.println(troops);
-
-
-        insertionSort.sort(troops, comparator);
-        System.out.println("\nTroops after");
-        System.out.println(troops);
-
-        fillSorted(troops, orientation);
-
     }
 
-    private void fillSorted(List<Character> troops, Orientation orientation) {
+    public void fillSorted(List<Character> troops, Orientation orientation) {
+
         if (troops.isEmpty()) {
             return;
         }
@@ -63,11 +46,11 @@ public class BattleField {
         TroopType prevType = troops.get(0).getType();
         int line = 0;
         int position = 0;
-        int size = fieldMatrix.length;
+        int size = grid.length;
 
-        clearMatrix();
+        clear();
 
-        for (Character troop : troops){
+        for (Character troop : troops) {
 
             if (position >= size) {
                 line++;
@@ -85,7 +68,7 @@ public class BattleField {
             int row = 0;
             int col = 0;
 
-            switch (orientation){
+            switch (orientation) {
                 case EAST:
                     row = (size - 1) - position;
                     col = line;
@@ -109,34 +92,8 @@ public class BattleField {
                 continue;
             }
 
-            fieldMatrix[row][col].setCharacter(troop);
+            grid[row][col].setCharacter(troop);
             position++;
-        }
-    }
-
-    private void clearMatrix() {
-        for (int i = 0; i < fieldMatrix.length; i++) {
-            for (int j = 0; j < fieldMatrix[i].length; j++) {
-                fieldMatrix[i][j].setCharacter(null);
-            }
-        }
-    }
-
-    public void showBattleField(String type){
-        for (int i = 0; i < fieldMatrix.length ; i++){
-            for (int j = 0; j < fieldMatrix[i].length; j++){
-                if (this.getCell(i, j).isEmpty()){
-                    System.out.print(" * ");
-                } else {
-                    Character c = getCell(i,j).getCharacter();
-                    if (type.equals("n")){
-                        System.out.print(" " + c.getType().getMin() + " ");
-                    } else {
-                        System.out.print(" " + c + " ");
-                    }
-                }
-            }
-            System.out.println();
         }
     }
 }

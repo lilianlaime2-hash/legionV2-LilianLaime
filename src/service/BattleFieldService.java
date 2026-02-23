@@ -1,0 +1,39 @@
+package service;
+
+import model.*;
+import model.Character;
+import sorting.SortingContext;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class BattleFieldService {
+
+    public void sort(BattleField battleField, SortingContext context) {
+
+        List<Character> troops = extractTroops(battleField);
+
+        context.getStrategy().sort(troops, context.getComparator());
+
+        battleField.fillSorted(troops, context.getOrientation());
+    }
+
+    private List<Character> extractTroops(BattleField battleField) {
+
+        List<Character> troops = new ArrayList<>();
+        int size = battleField.getSize();
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+
+                Cell cell = battleField.getCell(i, j);
+
+                if (!cell.isEmpty()) {
+                    troops.add(cell.getCharacter());
+                }
+            }
+        }
+
+        return troops;
+    }
+}
