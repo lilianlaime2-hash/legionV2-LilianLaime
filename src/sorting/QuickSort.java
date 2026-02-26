@@ -10,34 +10,31 @@ public class QuickSort<T> implements SortStrategy<T> {
         quickSort(list, comparator, 0, list.size() - 1);
     }
 
-    private void quickSort(List<T> list, Comparator<T> comp, int low, int high) {
-        if (low < high) {
-            int pi = partition(list, comp, low, high);
-            quickSort(list, comp, low, pi - 1);
-            quickSort(list, comp, pi + 1, high);
-        }
+    private void quickSort(List<T> list, Comparator<T> comparator, int low, int high) {
+        if (low >= high) return;
+
+        int p = partition(list, comparator, low, high);
+        quickSort(list, comparator, low, p - 1);
+        quickSort(list, comparator, p + 1, high);
     }
 
-    private int partition(List<T> list, Comparator<T> comp, int low, int high) {
-
+    private int partition(List<T> list, Comparator<T> comparator, int low, int high) {
         T pivot = list.get(high);
-        int i = low - 1;
+        int i = low;
 
         for (int j = low; j < high; j++) {
-
-            if (comp.compare(list.get(j), pivot) <= 0) {
-                i++;
+            if (comparator.compare(list.get(j), pivot) <= 0) {
                 swap(list, i, j);
+                i++;
             }
         }
-
-        swap(list, i + 1, high);
-        return i + 1;
+        swap(list, i, high);
+        return i;
     }
 
     private void swap(List<T> list, int i, int j) {
-        T temp = list.get(i);
+        T tmp = list.get(i);
         list.set(i, list.get(j));
-        list.set(j, temp);
+        list.set(j, tmp);
     }
 }

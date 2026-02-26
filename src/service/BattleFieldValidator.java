@@ -1,15 +1,15 @@
 package service;
 
-import util.Parameters;
+import util.GameConfig;
 
 import java.util.Arrays;
 
 public class BattleFieldValidator {
 
-    public boolean validateCapacity(Parameters parameters) {
+    public boolean validateCapacity(GameConfig config) {
 
-        int totalTroops = Arrays.stream(parameters.u).sum();
-        int battlefieldSize = parameters.f * parameters.f;
+        int totalTroops = Arrays.stream(config.getUnits()).sum();
+        int battlefieldSize = config.getFieldSize() * config.getFieldSize();
 
         if (totalTroops > battlefieldSize) {
             System.out.println();
@@ -19,11 +19,11 @@ public class BattleFieldValidator {
         }
 
         int requiredLines = 0;
-        for (int amount : parameters.u) {
-            requiredLines += (int) Math.ceil((double) amount / parameters.f);
+        for (int amount : config.getUnits()) {
+            requiredLines += (int) Math.ceil((double) amount / config.getFieldSize());
         }
 
-        if (requiredLines > parameters.f) {
+        if (requiredLines > config.getFieldSize()) {
             System.out.println();
             System.out.println("Error: \"Troop distribution exceeds battlefield height\"");
             return false;

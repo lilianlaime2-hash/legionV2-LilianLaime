@@ -1,8 +1,5 @@
 package model;
 
 public class Commander extends Character {
-
-    public Commander(int value) {
-        super(TroopType.COMMANDER, value);
-    }
+    public Commander(int value) { super(value, TroopType.COMMANDER); }
 }

@@ -1,70 +1,70 @@
 package controller;
 
-import model.*;
+import model.BattleField;
 import model.Character;
-import service.*;
-import sorting.*;
-import view.BattleFieldView;
-import util.Parameters;
+import service.BattleFieldService;
+import service.BattleFieldValidator;
+import service.TroopFactory;
+import service.TroopPlacer;
 import sorting.ComparatorFactory;
+import sorting.SortStrategy;
+import sorting.SortStrategyFactory;
+import sorting.SortingContext;
+import util.CliParser;
+import util.GameConfig;
+import util.ParseReport;
+import view.BattleFieldView;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
 
 public class GameController {
 
-    private final Parameters parameters = new Parameters();
-    private final Random random = new Random();
-    private final BattleFieldService battleFieldService = new BattleFieldService();
-    private final ComparatorFactory comparatorFactory = new ComparatorFactory();
-    private final BattleFieldView battleFieldView = new BattleFieldView();
-    private final BattleFieldValidator battleFieldValidator = new BattleFieldValidator();
+    private final CliParser cliParser = new CliParser();
+    private final BattleFieldValidator validator = new BattleFieldValidator();
     private final TroopFactory troopFactory = new TroopFactory();
-    private final SortStrategyFactory strategyFactory = new SortStrategyFactory();
     private final TroopPlacer troopPlacer = new TroopPlacer();
+    private final SortStrategyFactory strategyFactory = new SortStrategyFactory();
+    private final ComparatorFactory comparatorFactory = new ComparatorFactory();
+    private final BattleFieldService battleFieldService = new BattleFieldService();
+    private final BattleFieldView view = new BattleFieldView();
 
     public void startGame(String[] args) {
 
-        parameters.validate(args);
-        parameters.printState();
+        ParseReport report = cliParser.parse(args);
 
-        if (invalidParameters()) {
+        report.printState();
+
+        if (report.hasFatalErrors()) {
             System.out.println("Error: \"Invalid arguments\"");
             return;
         }
 
-        if (!battleFieldValidator.validateCapacity(parameters)) {
-            return;
-        }
+        GameConfig config = report.getConfig();
 
-        List<Character> troops = troopFactory.buildTroops(parameters.u);
+        if (!validator.validateCapacity(config)) return;
 
-        BattleField battleField = new BattleField(parameters.f);
+        List<Character> troops = troopFactory.buildTroops(config.getUnits());
 
-        troopPlacer.placeRandom(battleField, troops, parameters.f);
+        BattleField battleField = new BattleField(config.getFieldSize());
+
+        troopPlacer.placeRandom(battleField, troops, config.getFieldSize());
 
         System.out.println("\nInitial Position:");
-        battleFieldView.print(battleField, parameters.t);
+        view.print(battleField, config.getType());
 
-        SortStrategy<Character> strategy = strategyFactory.resolve(parameters.a);
+        SortStrategy<Character> strategy =
+                strategyFactory.resolve(config.getAlgorithm());
 
-        Comparator<Character> comparator = comparatorFactory.create(parameters.t);
+        Comparator<Character> comparator =
+                comparatorFactory.create(config.getType());
 
-        SortingContext context = new SortingContext(strategy, comparator, parameters.o);
+        SortingContext<Character> context =
+                new SortingContext<>(strategy, comparator, config.getOrientation());
 
         battleFieldService.sort(battleField, context);
 
         System.out.println("\nFinal Position:");
-        battleFieldView.print(battleField, parameters.t);
+        view.print(battleField, config.getType());
     }
-
-    private boolean invalidParameters() {
-        return Boolean.FALSE.equals(parameters.aValid)
-                || Boolean.FALSE.equals(parameters.tValid)
-                || Boolean.FALSE.equals(parameters.uValid)
-                || Boolean.FALSE.equals(parameters.fValid)
-                || parameters.a == null
-                || parameters.t == null
-                || parameters.u == null;
-    }
-
 }

@@ -9,43 +9,32 @@ public class MergeSort<T> implements SortStrategy<T> {
     @Override
     public void sort(List<T> list, Comparator<T> comparator) {
         if (list.size() <= 1) return;
-
-        mergeSort(list, comparator, 0, list.size() - 1);
+        List<T> sorted = mergeSort(new ArrayList<>(list), comparator);
+        for (int i = 0; i < list.size(); i++) list.set(i, sorted.get(i));
     }
 
-    private void mergeSort(List<T> list, Comparator<T> comp, int left, int right) {
+    private List<T> mergeSort(List<T> list, Comparator<T> comparator) {
+        if (list.size() <= 1) return list;
 
-        if (left < right) {
-            int mid = (left + right) / 2;
+        int mid = list.size() / 2;
+        List<T> left = mergeSort(new ArrayList<>(list.subList(0, mid)), comparator);
+        List<T> right = mergeSort(new ArrayList<>(list.subList(mid, list.size())), comparator);
 
-            mergeSort(list, comp, left, mid);
-            mergeSort(list, comp, mid + 1, right);
-
-            merge(list, comp, left, mid, right);
-        }
+        return merge(left, right, comparator);
     }
 
-    private void merge(List<T> list, Comparator<T> comp, int left, int mid, int right) {
+    private List<T> merge(List<T> left, List<T> right, Comparator<T> comparator) {
+        List<T> result = new ArrayList<>();
+        int i = 0, j = 0;
 
-        List<T> temp = new ArrayList<>();
-
-        int i = left;
-        int j = mid + 1;
-
-        while (i <= mid && j <= right) {
-
-            if (comp.compare(list.get(i), list.get(j)) <= 0) {
-                temp.add(list.get(i++));
-            } else {
-                temp.add(list.get(j++));
-            }
+        while (i < left.size() && j < right.size()) {
+            if (comparator.compare(left.get(i), right.get(j)) <= 0) result.add(left.get(i++));
+            else result.add(right.get(j++));
         }
 
-        while (i <= mid) temp.add(list.get(i++));
-        while (j <= right) temp.add(list.get(j++));
+        while (i < left.size()) result.add(left.get(i++));
+        while (j < right.size()) result.add(right.get(j++));
 
-        for (int k = 0; k < temp.size(); k++) {
-            list.set(left + k, temp.get(k));
-        }
+        return result;
     }
 }

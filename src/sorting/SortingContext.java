@@ -1,27 +1,28 @@
 package sorting;
 
-import model.Character;
 import model.Orientation;
 
 import java.util.Comparator;
 
-public class SortingContext {
+public class SortingContext<T> {
 
-    private final SortStrategy<Character> strategy;
-    private final Comparator<Character> comparator;
+    private final SortStrategy<T> strategy;
+    private final Comparator<T> comparator;
     private final Orientation orientation;
 
-    public SortingContext(SortStrategy<Character> strategy, Comparator<Character> comparator, Orientation orientation) {
+    public SortingContext(SortStrategy<T> strategy,
+                          Comparator<T> comparator,
+                          Orientation orientation) {
         this.strategy = strategy;
         this.comparator = comparator;
         this.orientation = orientation;
     }
 
-    public SortStrategy<Character> getStrategy() {
+    public SortStrategy<T> getStrategy() {
         return strategy;
     }
 
-    public Comparator<Character> getComparator() {
+    public Comparator<T> getComparator() {
         return comparator;
     }
 

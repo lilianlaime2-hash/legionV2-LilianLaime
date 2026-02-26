@@ -20,15 +20,14 @@ public class TroopFactory {
 
             for (int j = 0; j < amount; j++) {
                 int value = type.getMin() + j;
-                troops.add(createCharacter(type, value));
+                troops.add(create(type, value));
             }
         }
 
         return troops;
     }
 
-    private Character createCharacter(TroopType type, int value) {
-
+    private Character create(TroopType type, int value) {
         return switch (type) {
             case COMMANDER -> new Commander(value);
             case MEDIC -> new Medic(value);

@@ -1,30 +1,28 @@
 package model;
 
 public enum Orientation {
-    EAST("e", "East"),
-    WEST("w", "West"),
     NORTH("n", "North"),
-    SOUTH("s", "South");
+    SOUTH("s", "Sud"),
+    EAST("e", "East"),
+    WEST("w", "west");
 
     private final String symbol;
     private final String longName;
 
-    Orientation(String symbol, String longName){
+    Orientation(String symbol, String longName) {
         this.symbol = symbol;
         this.longName = longName;
     }
 
-    public static Orientation fromSymbol(String symbol) {
+    public String getLongName() {
+        return longName;
+    }
+
+    public static Orientation fromSymbol(String s) {
+        String v = s.toLowerCase();
         for (Orientation o : values()) {
-            if (o.symbol.equals(symbol)) {
-                return o;
-            }
+            if (o.symbol.equals(v)) return o;
         }
-        throw new IllegalArgumentException("Invalid algorithm");
+        throw new IllegalArgumentException("Invalid orientation: " + s);
     }
-
-    public String getLongName(){
-        return this.longName;
-    }
-
 }

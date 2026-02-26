@@ -1,6 +1,7 @@
 package service;
 
-import model.*;
+import model.BattleField;
+import model.Cell;
 import model.Character;
 import sorting.SortingContext;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 public class BattleFieldService {
 
-    public void sort(BattleField battleField, SortingContext context) {
+    public void sort(BattleField battleField, SortingContext<Character> context) {
 
         List<Character> troops = extractTroops(battleField);
 
@@ -27,10 +28,7 @@ public class BattleFieldService {
             for (int j = 0; j < size; j++) {
 
                 Cell cell = battleField.getCell(i, j);
-
-                if (!cell.isEmpty()) {
-                    troops.add(cell.getCharacter());
-                }
+                if (!cell.isEmpty()) troops.add(cell.getCharacter());
             }
         }
 

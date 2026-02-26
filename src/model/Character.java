@@ -2,24 +2,15 @@ package model;
 
 public abstract class Character {
 
-    private final TroopType type;
     private final int value;
+    private final TroopType type;
 
-    public Character(TroopType type, int value) {
-        this.type = type;
+    protected Character(int value, TroopType type) {
         this.value = value;
+        this.type = type;
     }
 
-    public TroopType getType() {
-        return type;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(type.getSymbol());
-    }
+    public int getValue() { return value; }
+    public TroopType getType() { return type; }
+    public char getSymbol() { return type.getSymbol(); }
 }

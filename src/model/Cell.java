@@ -2,20 +2,21 @@ package model;
 
 public class Cell {
 
-    private Character character = null;
+    private Character character;
 
-    public boolean isEmpty(){
-        if (character == null){
-            return true;
-        }
-        return false;
+    public boolean isEmpty() {
+        return character == null;
     }
 
-    public void setCharacter (Character character){
+    public Character getCharacter() {
+        return character;
+    }
+
+    public void setCharacter(Character character) {
         this.character = character;
     }
 
-    public Character getCharacter (){
-        return character;
+    public void clear() {
+        this.character = null;
     }
 }
