@@ -1,16 +1,30 @@
 package sorting;
 
+import model.Character;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
-public class MergeSort<T> implements SortStrategy<T> {
+public class MergeSort<T extends Character> implements SortStrategy<T> {
 
     @Override
-    public void sort(List<T> list, Comparator<T> comparator) {
+    public void sort(
+            List<T> list,
+            Comparator<T> comparator,
+            ConsoleSortObserver<T> observer
+    ) {
         if (list.size() <= 1) return;
         List<T> sorted = mergeSort(new ArrayList<>(list), comparator);
-        for (int i = 0; i < list.size(); i++) list.set(i, sorted.get(i));
+        for (int i = 0; i < list.size(); i++) {
+            T current = list.get(i);
+            T target = sorted.get(i);
+            if (!Objects.equals(current, target)) {
+                list.set(i, target);
+                observer.showStep(list);
+            }
+        }
     }
 
     private List<T> mergeSort(List<T> list, Comparator<T> comparator) {
@@ -28,12 +42,18 @@ public class MergeSort<T> implements SortStrategy<T> {
         int i = 0, j = 0;
 
         while (i < left.size() && j < right.size()) {
-            if (comparator.compare(left.get(i), right.get(j)) <= 0) result.add(left.get(i++));
+            int cmp = comparator.compare(left.get(i), right.get(j));
+
+            if (cmp <= 0) result.add(left.get(i++));
             else result.add(right.get(j++));
         }
 
-        while (i < left.size()) result.add(left.get(i++));
-        while (j < right.size()) result.add(right.get(j++));
+        while (i < left.size()) {
+            result.add(left.get(i++));
+        }
+        while (j < right.size()) {
+            result.add(right.get(j++));
+        }
 
         return result;
     }

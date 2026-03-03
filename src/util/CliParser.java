@@ -4,7 +4,6 @@ import model.Algorithm;
 import model.GameConfig;
 import model.Orientation;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,7 +78,7 @@ public class CliParser {
             Algorithm algorithm = Algorithm.translateAbbreviation(paramMap.get("a"));
             statuses.put("a", FieldStatus.VALID);
             return algorithm;
-        } catch (Exception e) {
+        } catch (Exception ignored) {
             statuses.put("a", FieldStatus.INVALID);
             return null;
         }
@@ -100,7 +99,7 @@ public class CliParser {
             Orientation orientation = Orientation.translateAbbreviation(paramMap.get("o"));
             statuses.put("o", FieldStatus.VALID);
             return orientation;
-        } catch (Exception e) {
+        } catch (Exception ignored) {
             statuses.put("o", FieldStatus.INVALID);
             return Orientation.SOUTH;
         }
@@ -123,7 +122,7 @@ public class CliParser {
 
             statuses.put("u", FieldStatus.VALID);
             return troops;
-        } catch (Exception e) {
+        } catch (Exception ignored) {
             statuses.put("u", FieldStatus.INVALID);
             return null;
         }
@@ -138,7 +137,7 @@ public class CliParser {
             }
             statuses.put("f", FieldStatus.INVALID);
             return defaultFieldSize;
-        } catch (Exception e) {
+        } catch (Exception ignored) {
             statuses.put("f", FieldStatus.INVALID);
             return defaultFieldSize;
         }

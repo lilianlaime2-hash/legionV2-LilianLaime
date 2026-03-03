@@ -1,10 +1,11 @@
 package sorting;
 
 import model.Orientation;
+import model.Character;
 
 import java.util.Comparator;
 
-public class SortingContext<T> {
+public class SortingContext<T extends Character> {
 
     private final SortStrategy<T> strategy;
     private final Comparator<T> comparator;

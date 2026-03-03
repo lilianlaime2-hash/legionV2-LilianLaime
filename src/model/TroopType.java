@@ -1,7 +1,7 @@
 package model;
 
 public enum TroopType {
-    COMMANDER(0, 'c'),
+    COMMANDER(0, 'C'),
     MEDIC(10, 'M'),
     TANK(20, 'T'),
     SNIPER(30, 'S'),

@@ -3,6 +3,7 @@ package service;
 import model.BattleField;
 import model.Cell;
 import model.Character;
+import sorting.ConsoleSortObserver;
 import sorting.SortingContext;
 
 import java.util.ArrayList;
@@ -10,17 +11,26 @@ import java.util.List;
 
 public class BattleFieldService {
 
+    private static final int STEP_PRINT_INTERVAL = 5;
     private final TroopPlacer troopPlacer;
 
     public BattleFieldService(TroopPlacer troopPlacer) {
         this.troopPlacer = troopPlacer;
     }
 
-    public void sort(BattleField battleField, SortingContext<Character> context) {
+    public void sort(BattleField battleField, SortingContext<Character> context, String type) {
 
         List<Character> troops = extractTroops(battleField);
+        ConsoleSortObserver<Character> observer = new ConsoleSortObserver<>(STEP_PRINT_INTERVAL, type);
 
-        context.getStrategy().sort(troops, context.getComparator());
+        System.out.println("\nSorting steps:");
+        observer.printTroops(troops);
+
+        context.getStrategy().sort(troops, context.getComparator(), observer);
+        boolean needsFinalPrint = observer.getSteps() > 0 && observer.getSteps() % STEP_PRINT_INTERVAL != 0;
+        if (needsFinalPrint) {
+            observer.printTroops(troops);
+        }
 
         troopPlacer.placeSorted(battleField, troops, context.getOrientation());
     }
@@ -40,4 +50,5 @@ public class BattleFieldService {
 
         return troops;
     }
+
 }

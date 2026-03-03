@@ -44,7 +44,7 @@ public class GameEngine {
         return battleField;
     }
 
-    public void sortBattleField(BattleField battleField, GameConfig config) {
+    public double sortBattleField(BattleField battleField, GameConfig config) {
 
         SortStrategy<Character> sortStrategy = strategyFactory.createSortStrategy(config.getAlgorithm());
 
@@ -56,6 +56,10 @@ public class GameEngine {
                         comparator,
                         config.getOrientation());
 
-        battleFieldService.sort(battleField, context);
+        long start = System.nanoTime();
+
+        battleFieldService.sort(battleField, context, config.getType());
+
+        return (System.nanoTime() - start) / 1_000_000_000.0;
     }
 }
