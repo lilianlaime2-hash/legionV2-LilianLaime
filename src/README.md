@@ -1,7 +1,7 @@
 # README
 
 ## Execution Flow
-![Diagrama de Flujo](~/Documents/Progra-II/CAPSTONE/legion/FLOW.png)
+![Diagrama de Flujo](../CAPSTONE/legion/FLOW.png)
 
 1. `controller`: receives CLI args and coordinates the game flow.
 2. `validation`: validates syntax and semantic rules.
