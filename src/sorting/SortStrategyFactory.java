@@ -1,7 +1,10 @@
 package sorting;
 
-import model.Algorithm;
-import model.Character;
+import creation.model.character.Character;
+import sorting.algorithms.BubbleSort;
+import sorting.algorithms.InsertionSort;
+import sorting.algorithms.MergeSort;
+import sorting.algorithms.QuickSort;
 
 public class SortStrategyFactory {
 

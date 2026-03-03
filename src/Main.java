@@ -1,7 +1,11 @@
 import controller.GameController;
-import service.*;
-import sorting.*;
-import util.CliParser;
+import creation.TroopFactory;
+import creation.TroopPlacer;
+import service.GameEngine;
+import sorting.BattleFieldService;
+import sorting.SortStrategyFactory;
+import validation.semantic.BattleFieldValidator;
+import validation.syntax.CliParser;
 import view.BattleFieldView;
 
 public class Main {

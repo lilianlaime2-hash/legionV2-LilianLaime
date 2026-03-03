@@ -1,7 +1,12 @@
-package service;
+package creation;
 
-import model.*;
-import model.Character;
+import creation.model.character.Character;
+import creation.model.character.Commander;
+import creation.model.character.Infantry;
+import creation.model.character.Medic;
+import creation.model.character.Sniper;
+import creation.model.character.Tank;
+import creation.model.character.TroopType;
 
 import java.util.ArrayList;
 import java.util.List;

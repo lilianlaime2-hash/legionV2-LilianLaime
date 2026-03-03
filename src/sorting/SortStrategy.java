@@ -1,6 +1,6 @@
 package sorting;
 
-import model.Character;
+import creation.model.character.Character;
 
 import java.util.Comparator;
 import java.util.List;

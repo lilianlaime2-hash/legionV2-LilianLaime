@@ -1,10 +1,9 @@
-package service;
+package sorting;
 
-import model.BattleField;
-import model.Cell;
-import model.Character;
-import sorting.ConsoleSortObserver;
-import sorting.SortingContext;
+import creation.TroopPlacer;
+import creation.model.BattleField;
+import creation.model.Cell;
+import creation.model.character.Character;
 
 import java.util.ArrayList;
 import java.util.List;

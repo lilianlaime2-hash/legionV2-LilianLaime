@@ -1,4 +1,4 @@
-package model;
+package sorting;
 
 public enum Algorithm {
     INSERTION_SORT("i", "Insertion sort"),

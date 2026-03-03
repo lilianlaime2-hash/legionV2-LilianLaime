@@ -1,4 +1,6 @@
-package model;
+package creation.model;
+
+import creation.model.character.Character;
 
 public class Cell {
 

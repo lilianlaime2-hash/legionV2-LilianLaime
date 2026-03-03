@@ -1,6 +1,6 @@
-package service;
+package validation.semantic;
 
-import model.GameConfig;
+import creation.model.GameConfig;
 
 public class BattleFieldValidator {
 

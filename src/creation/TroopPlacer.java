@@ -1,9 +1,9 @@
-package service;
+package creation;
 
-import model.BattleField;
-import model.Character;
-import model.Orientation;
-import model.TroopType;
+import creation.model.BattleField;
+import creation.model.character.Character;
+import creation.model.Orientation;
+import creation.model.character.TroopType;
 
 import java.util.List;
 import java.util.Random;

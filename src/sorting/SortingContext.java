@@ -1,7 +1,7 @@
 package sorting;
 
-import model.Orientation;
-import model.Character;
+import creation.model.Orientation;
+import creation.model.character.Character;
 
 import java.util.Comparator;
 

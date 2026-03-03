@@ -1,11 +1,11 @@
 package controller;
 
-import model.BattleField;
-import model.GameConfig;
-import service.BattleFieldValidator;
+import creation.model.BattleField;
+import creation.model.GameConfig;
 import service.GameEngine;
-import util.CliParser;
-import util.ParseReport;
+import validation.semantic.BattleFieldValidator;
+import validation.syntax.CliParser;
+import validation.syntax.ParseReport;
 import view.BattleFieldView;
 
 public class GameController {

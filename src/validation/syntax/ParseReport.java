@@ -1,8 +1,8 @@
-package util;
+package validation.syntax;
 
-import model.Algorithm;
-import model.GameConfig;
-import model.Orientation;
+import creation.model.GameConfig;
+import creation.model.Orientation;
+import sorting.Algorithm;
 
 import java.util.Map;
 

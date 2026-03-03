@@ -1,8 +1,11 @@
 package service;
 
-import model.BattleField;
-import model.Character;
-import model.GameConfig;
+import creation.TroopFactory;
+import creation.TroopPlacer;
+import creation.model.BattleField;
+import creation.model.character.Character;
+import creation.model.GameConfig;
+import sorting.BattleFieldService;
 import sorting.CharacterComparator;
 import sorting.SortStrategy;
 import sorting.SortStrategyFactory;

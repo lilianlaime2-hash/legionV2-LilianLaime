@@ -1,4 +1,4 @@
-package model;
+package creation.model.character;
 
 public enum TroopType {
     COMMANDER(0, 'C'),

@@ -1,4 +1,6 @@
-package model;
+package creation.model;
+
+import sorting.Algorithm;
 
 import java.util.Arrays;
 

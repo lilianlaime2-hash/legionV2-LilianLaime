@@ -1,6 +1,8 @@
-package sorting;
+package sorting.algorithms;
 
-import model.Character;
+import creation.model.character.Character;
+import sorting.ConsoleSortObserver;
+import sorting.SortStrategy;
 
 import java.util.ArrayList;
 import java.util.Comparator;

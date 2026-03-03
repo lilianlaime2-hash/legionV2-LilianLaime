@@ -1,4 +1,4 @@
-package model;
+package creation.model;
 
 public enum Orientation {
     NORTH("n", "North"),

@@ -1,4 +1,4 @@
-package model;
+package creation.model.character;
 
 public abstract class Character {
 
