@@ -1,12 +1,29 @@
 import controller.GameController;
+import service.*;
+import sorting.*;
+import util.CliParser;
+import view.BattleFieldView;
 
 public class Main {
 
     public static void main(String[] args) {
-        GameController game1 = new GameController();
-        game1.startGame(args);
 
-        // a=i t=c u=1,2,5,5,10
-        // a=i t=c u=3,2,2,1,1
+        TroopPlacer troopPlacer = new TroopPlacer();
+
+        GameEngine engine = new GameEngine(
+                new TroopFactory(),
+                troopPlacer,
+                new SortStrategyFactory(),
+                new BattleFieldService(troopPlacer)
+        );
+
+        GameController controller = new GameController(
+                new CliParser(),
+                new BattleFieldValidator(),
+                engine,
+                new BattleFieldView()
+        );
+
+        controller.startGame(args);
     }
 }

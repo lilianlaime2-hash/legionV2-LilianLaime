@@ -4,7 +4,7 @@ import model.Algorithm;
 
 public class SortStrategyFactory {
 
-    public <T> SortStrategy<T> resolve(Algorithm algorithm) {
+    public <T> SortStrategy<T> createSortStrategy(Algorithm algorithm) {
         return switch (algorithm) {
             case INSERTION_SORT -> new InsertionSort<>();
             case BUBBLE_SORT -> new BubbleSort<>();

@@ -10,23 +10,24 @@ public class BattleFieldView {
         int size = battleField.getSize();
 
         for (int i = 0; i < size; i++) {
-            StringBuilder sb = new StringBuilder();
+            String row = "";
 
             for (int j = 0; j < size; j++) {
                 Cell cell = battleField.getCell(i, j);
 
                 if (cell.isEmpty()) {
-                    sb.append("*");
+                    row += "*";
                 } else {
-                    Character c = cell.getCharacter();
-                    if ("n".equals(type)) sb.append(c.getValue());
-                    else sb.append(c.getSymbol());
+                    Character character = cell.getCharacter();
+                    if ("n".equals(type)) {
+                        row += character.getValue();
+                    } else row += character.getSymbol();
                 }
 
-                if (j < size - 1) sb.append(" ");
+                row += " ";
             }
 
-            System.out.println(sb);
+            System.out.println(row);
         }
     }
 }

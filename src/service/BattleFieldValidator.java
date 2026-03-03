@@ -1,31 +1,45 @@
 package service;
 
-import util.GameConfig;
-
-import java.util.Arrays;
+import model.GameConfig;
 
 public class BattleFieldValidator {
 
     public boolean validateCapacity(GameConfig config) {
+        return troopsFitInArea(config) && troopsFitPerLine(config);
+    }
 
-        int totalTroops = Arrays.stream(config.getUnits()).sum();
-        int battlefieldSize = config.getFieldSize() * config.getFieldSize();
+    private boolean troopsFitInArea(GameConfig config) {
 
-        if (totalTroops > battlefieldSize) {
+        int totalTroops = config.sumUnits();
+        int battlefieldArea = config.getFieldSize() * config.getFieldSize();
+
+        if (totalTroops <= 0) {
             System.out.println();
-            System.out.println("Error: \"Too many troops for battlefield size\"");
-            System.out.println("Troops: " + totalTroops + "\nCapacity: " + battlefieldSize);
+            System.out.println("Error: \"Troops must be greater than 0\"");
             return false;
         }
 
+        if (totalTroops > battlefieldArea) {
+            System.out.println();
+            System.out.println("Error: \"Too many troops for battlefield size\"");
+            System.out.println("Troops: " + totalTroops + "\nCapacity: " + battlefieldArea);
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean troopsFitPerLine(GameConfig config) {
         int requiredLines = 0;
-        for (int amount : config.getUnits()) {
-            requiredLines += (int) Math.ceil((double) amount / config.getFieldSize());
+        for (int troopAmount : config.getUnits()) {
+            double linesNeeded = (double) troopAmount / config.getFieldSize();
+            int roundedLines = (int) Math.ceil(linesNeeded);
+            requiredLines += roundedLines;
         }
 
         if (requiredLines > config.getFieldSize()) {
             System.out.println();
-            System.out.println("Error: \"Troop distribution exceeds battlefield height\"");
+            System.out.println("Error: \"Each troop type needs separate lines, but battlefield height is not enough\"");
             return false;
         }
 

@@ -6,11 +6,11 @@ public enum Orientation {
     EAST("e", "East"),
     WEST("w", "west");
 
-    private final String symbol;
+    private final String abbreviation;
     private final String longName;
 
-    Orientation(String symbol, String longName) {
-        this.symbol = symbol;
+    Orientation(String abbreviation, String longName) {
+        this.abbreviation = abbreviation;
         this.longName = longName;
     }
 
@@ -18,11 +18,10 @@ public enum Orientation {
         return longName;
     }
 
-    public static Orientation fromSymbol(String s) {
-        String v = s.toLowerCase();
-        for (Orientation o : values()) {
-            if (o.symbol.equals(v)) return o;
+    public static Orientation translateAbbreviation(String abbreviation) {
+        for (Orientation orientation : values()) {
+            if (orientation.abbreviation.equals(abbreviation)) return orientation;
         }
-        throw new IllegalArgumentException("Invalid orientation: " + s);
+        throw new IllegalArgumentException("Invalid orientation: " + abbreviation);
     }
 }

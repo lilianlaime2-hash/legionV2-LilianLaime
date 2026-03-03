@@ -10,7 +10,10 @@ public abstract class Character {
         this.type = type;
     }
 
+    // Returns the combat value of the troop.
     public int getValue() { return value; }
+    // Returns the troop category.
     public TroopType getType() { return type; }
+    // Returns the printable symbol of the troop type.
     public char getSymbol() { return type.getSymbol(); }
 }

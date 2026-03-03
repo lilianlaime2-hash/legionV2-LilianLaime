@@ -13,13 +13,13 @@ public class TroopFactory {
         List<Character> troops = new ArrayList<>();
         TroopType[] types = TroopType.values();
 
-        for (int i = 0; i < units.length && i < types.length; i++) {
+        for (int i = 0; i < units.length; i++) {
 
             TroopType type = types[i];
             int amount = units[i];
 
             for (int j = 0; j < amount; j++) {
-                int value = type.getMin() + j;
+                int value = type.getMin() + j; //
                 troops.add(create(type, value));
             }
         }

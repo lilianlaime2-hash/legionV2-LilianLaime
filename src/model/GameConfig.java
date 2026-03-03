@@ -1,11 +1,8 @@
-package util;
-
-import model.Algorithm;
-import model.Orientation;
+package model;
 
 import java.util.Arrays;
 
-public final class GameConfig {
+public class GameConfig {
 
     private final Algorithm algorithm;
     private final String type;
@@ -13,12 +10,11 @@ public final class GameConfig {
     private final int[] units;
     private final int fieldSize;
 
-    public GameConfig(
-            Algorithm algorithm,
-            String type,
-            Orientation orientation,
-            int[] units,
-            int fieldSize) {
+    public GameConfig(Algorithm algorithm,
+                      String type,
+                      Orientation orientation,
+                      int[] units,
+                      int fieldSize) {
 
         this.algorithm = algorithm;
         this.type = type;
@@ -41,6 +37,17 @@ public final class GameConfig {
 
     public int[] getUnits() {
         return units == null ? null : Arrays.copyOf(units, units.length);
+    }
+
+    public int sumUnits() {
+        if (units == null) {
+            return 0;
+        }
+        int total = 0;
+        for (int unit : units) {
+            total += unit;
+        }
+        return total;
     }
 
     public int getFieldSize() {

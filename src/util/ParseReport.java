@@ -1,70 +1,90 @@
 package util;
 
 import model.Algorithm;
+import model.GameConfig;
 import model.Orientation;
+
+import java.util.Map;
 
 public class ParseReport {
 
     private final GameConfig config;
+    private final Map<String, FieldStatus> statuses;
 
-    private final FieldStatus aStatus;
-    private final FieldStatus tStatus;
-    private final FieldStatus oStatus;
-    private final FieldStatus uStatus;
-    private final FieldStatus fStatus;
-
-    public ParseReport(GameConfig config,
-                       FieldStatus aStatus,
-                       FieldStatus tStatus,
-                       FieldStatus oStatus,
-                       FieldStatus uStatus,
-                       FieldStatus fStatus) {
+    public ParseReport(GameConfig config, Map<String, FieldStatus> statuses) {
         this.config = config;
-        this.aStatus = aStatus;
-        this.tStatus = tStatus;
-        this.oStatus = oStatus;
-        this.uStatus = uStatus;
-        this.fStatus = fStatus;
+        this.statuses = statuses;
     }
 
     public GameConfig getConfig() {
         return config;
     }
 
-    public boolean hasFatalErrors() {
-        return aStatus == FieldStatus.INVALID
-                || tStatus == FieldStatus.INVALID
-                || uStatus == FieldStatus.INVALID
-                || fStatus == FieldStatus.INVALID
-                || config.getAlgorithm() == null
-                || config.getType() == null
-                || config.getUnits() == null;
+    public boolean hasErrors() {
+        return isInvalid("a")
+                || isInvalid("t")
+                || isInvalid("u")
+                || isInvalid("o")
+                || isInvalid("f")
+                || isMissing("a")
+                || isMissing("t")
+                || isMissing("u");
+    }
+
+    private boolean isInvalid(String key) {
+        FieldStatus status = statuses.get(key);
+        return status == FieldStatus.INVALID;
+    }
+
+    private boolean isMissing(String key) {
+        FieldStatus status = statuses.get(key);
+        return status == FieldStatus.NOT_PRESENT;
     }
 
     public void printState() {
-
-        Algorithm a = config.getAlgorithm();
-        String t = config.getType();
-        Orientation o = config.getOrientation();
-        int[] u = config.getUnits();
-        int f = config.getFieldSize();
-
-        System.out.println("Algorithm: [" + show(aStatus, a != null ? a.getLongName() : "") + "]");
-        System.out.println("Type: [" + show(tStatus, t != null ? (t.equals("c") ? "Character" : "Number") : "") + "]");
-        System.out.println("Orientation: [" + show(oStatus, o != null ? o.getLongName() : "") + "]");
-
-        int troopsCount = 0;
-        if (u != null) {
-            for (int x : u) troopsCount += x;
-        }
-
-        System.out.println("Troops: [" + show(uStatus, u != null ? String.valueOf(troopsCount) : "") + "]");
-        System.out.println("Battlefield: [" + show(fStatus, f + " x " + f) + "]");
+        System.out.println("Algorithm: [" + show(statuses.get("a"), getDisplayableAlgorithm()) + "]");
+        System.out.println("Type: [" + show(statuses.get("t"), getDisplayableType()) + "]");
+        System.out.println("Orientation: [" + show(statuses.get("o"), getDisplayableOrientation()) + "]");
+        System.out.println("Troops: [" + show(statuses.get("u"), getDisplayableTroops()) + "]");
+        System.out.println("Battlefield: [" + show(statuses.get("f"), getDisplayableBattlefield()) + "]");
     }
 
     private String show(FieldStatus status, String value) {
-        if (status == FieldStatus.NOT_PRESENT) return "Not present";
+        if (status == null || status == FieldStatus.NOT_PRESENT) return "Not present";
         if (status == FieldStatus.INVALID) return "Invalid";
         return value;
+    }
+
+
+    private String getDisplayableAlgorithm() {
+        Algorithm a = config.getAlgorithm();
+        return a != null ? a.getLongName() : "";
+    }
+
+    private String getDisplayableType() {
+        String t = config.getType();
+        if (t == null) {
+            return "";
+        }
+        return t.equals("c") ? "Character" : "Number";
+    }
+
+    private String getDisplayableOrientation() {
+        Orientation o = config.getOrientation();
+        return o != null ? o.getLongName() : "";
+    }
+
+    private String getDisplayableTroops() {
+        int[] u = config.getUnits();
+        if (u == null) {
+            return "";
+        }
+        int troopsCount = config.sumUnits();
+        return String.valueOf(troopsCount);
+    }
+
+    private String getDisplayableBattlefield() {
+        int f = config.getFieldSize();
+        return f + " x " + f;
     }
 }

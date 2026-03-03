@@ -10,13 +10,19 @@ import java.util.List;
 
 public class BattleFieldService {
 
+    private final TroopPlacer troopPlacer;
+
+    public BattleFieldService(TroopPlacer troopPlacer) {
+        this.troopPlacer = troopPlacer;
+    }
+
     public void sort(BattleField battleField, SortingContext<Character> context) {
 
         List<Character> troops = extractTroops(battleField);
 
         context.getStrategy().sort(troops, context.getComparator());
 
-        battleField.fillSorted(troops, context.getOrientation());
+        troopPlacer.placeSorted(battleField, troops, context.getOrientation());
     }
 
     private List<Character> extractTroops(BattleField battleField) {
