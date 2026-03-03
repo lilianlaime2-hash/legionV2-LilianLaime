@@ -1,34 +1,27 @@
 package model;
 
 public enum Algorithm {
-    INSERTION_SORT("i", "Insertion Sort"),
-    BUBBLE_SORT("b", "Buble Sort"),
-    QUICK_SORT("q", "Quick Sort"),
-    MERGE_SORT("m", "Merge Sort");
+    INSERTION_SORT("i", "Insertion sort"),
+    BUBBLE_SORT("b", "Bubble sort"),
+    MERGE_SORT("m", "Merge sort"),
+    QUICK_SORT("q", "Quick sort");
 
-    private final String symbol;
+    private final String abbreviation;
     private final String longName;
 
-    Algorithm(String symbol, String longName){
-        this.symbol = symbol;
+    Algorithm(String abbreviation, String longName) {
+        this.abbreviation = abbreviation;
         this.longName = longName;
     }
 
-    public String getSymbol(){
-        return this.symbol;
+    public String getLongName() {
+        return longName;
     }
 
-    public String getLongName(){
-        return this.longName;
-    }
-
-    public static Algorithm fromSymbol(String code) {
-        for (Algorithm a : values()) {
-            if (a.symbol.equals(code)) {
-                return a;
-            }
+    public static Algorithm translateAbbreviation(String abbreviation) {
+        for (Algorithm algorithm : values()) {
+            if (algorithm.abbreviation.equals(abbreviation)) return algorithm;
         }
-        throw new IllegalArgumentException("Invalid algorithm");
+        throw new IllegalArgumentException("Invalid algorithm: " + abbreviation);
     }
-
 }

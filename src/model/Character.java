@@ -1,23 +1,19 @@
 package model;
 
 public abstract class Character {
-    private int health;
-    private int speed;
-    private int rank;
-    private int row;
-    private int column;
+
+    private final int value;
     private final TroopType type;
 
-    public Character(TroopType type) {
+    protected Character(int value, TroopType type) {
+        this.value = value;
         this.type = type;
     }
 
-    @Override
-    public String toString(){
-        return String.valueOf(type.getSymbol());
-    }
-
-    public TroopType getType() {
-        return type;
-    }
+    // Returns the combat value of the troop.
+    public int getValue() { return value; }
+    // Returns the troop category.
+    public TroopType getType() { return type; }
+    // Returns the printable symbol of the troop type.
+    public char getSymbol() { return type.getSymbol(); }
 }

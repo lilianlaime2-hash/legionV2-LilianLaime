@@ -1,10 +1,5 @@
 package model;
 
-public class Sniper extends Character implements Shootable {
-
-    public Sniper (){
-        super(TroopType.SNIPER);
-    }
-
-
+public class Sniper extends Character {
+    public Sniper(int value) { super(value, TroopType.SNIPER); }
 }

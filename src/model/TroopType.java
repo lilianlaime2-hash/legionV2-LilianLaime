@@ -1,25 +1,20 @@
 package model;
 
 public enum TroopType {
-    COMMANDER('C',0),
-    MEDIC('M',10),
-    TANK('T', 20),
-    SNIPER('S', 30),
-    INFANTRY('I',40);
+    COMMANDER(0, 'c'),
+    MEDIC(10, 'M'),
+    TANK(20, 'T'),
+    SNIPER(30, 'S'),
+    INFANTRY(40, 'I');
 
-    private final int value;
+    private final int min;
     private final char symbol;
 
-    TroopType(char symbol, int value) {
-        this.value = value;
+    TroopType(int min, char symbol) {
+        this.min = min;
         this.symbol = symbol;
     }
 
-    public char getSymbol() {
-        return symbol;
-    }
-
-    public int getValue() {
-        return value;
-    }
+    public int getMin() { return min; }
+    public char getSymbol() { return symbol; }
 }
