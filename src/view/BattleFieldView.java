@@ -1,8 +1,8 @@
 package view;
 
-import model.BattleField;
-import model.Cell;
-import model.Character;
+import creation.model.BattleField;
+import creation.model.Cell;
+import creation.model.character.Character;
 
 public class BattleFieldView {
 

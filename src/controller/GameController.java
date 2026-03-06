@@ -1,11 +1,11 @@
 package controller;
 
-import model.BattleField;
-import model.GameConfig;
-import service.BattleFieldValidator;
-import service.GameEngine;
-import util.CliParser;
-import util.ParseReport;
+import creation.model.BattleField;
+import creation.model.GameConfig;
+import orchestration.GameEngine;
+import validation.semantic.BattleFieldValidator;
+import validation.syntax.CliParser;
+import validation.syntax.ParseReport;
 import view.BattleFieldView;
 
 public class GameController {
@@ -47,9 +47,10 @@ public class GameController {
         System.out.println("\nInitial Position:");
         view.print(battleField, config.getType());
 
-        gameEngine.sortBattleField(battleField, config);
-
+        double sortingSeconds = gameEngine.sortBattleField(battleField, config);
         System.out.println("\nFinal Position:");
+
         view.print(battleField, config.getType());
+        System.out.printf("Sorting time: %.3f s", sortingSeconds);
     }
 }
