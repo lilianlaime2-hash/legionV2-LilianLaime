@@ -9,45 +9,50 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-public class MergeSort<T extends Character> implements SortStrategy<T> {
+/**
+ * Reference source: https://www.geeksforgeeks.org/merge-sort/
+ * Implementation adapted for this project ((Character types, comparator, and observer).
+ */
+public class MergeSort implements SortStrategy {
 
     @Override
-    public void sort(
-            List<T> list,
-            Comparator<T> comparator,
-            ConsoleSortObserver<T> observer
-    ) {
+    public void sort(List<Character> list, Comparator<Character> comparator, ConsoleSortObserver observer) {
+
         if (list.size() <= 1) return;
-        List<T> sorted = mergeSort(new ArrayList<>(list), comparator);
+
+        List<Character> copy = new ArrayList<>(list);
+        List<Character> sorted = mergeSort(copy, comparator);
+
         for (int i = 0; i < list.size(); i++) {
-            T current = list.get(i);
-            T target = sorted.get(i);
+            Character current = list.get(i);
+            Character target = sorted.get(i);
             if (!Objects.equals(current, target)) {
                 list.set(i, target);
-                observer.showStep(list);
+                observer.notifyStep(list);
             }
         }
     }
 
-    private List<T> mergeSort(List<T> list, Comparator<T> comparator) {
+    private List<Character> mergeSort(List<Character> list, Comparator<Character> comparator) {
         if (list.size() <= 1) return list;
 
         int mid = list.size() / 2;
-        List<T> left = mergeSort(new ArrayList<>(list.subList(0, mid)), comparator);
-        List<T> right = mergeSort(new ArrayList<>(list.subList(mid, list.size())), comparator);
+        List<Character> left = mergeSort(new ArrayList<>(list.subList(0, mid)), comparator);
+        List<Character> right = mergeSort(new ArrayList<>(list.subList(mid, list.size())), comparator);
 
         return merge(left, right, comparator);
     }
 
-    private List<T> merge(List<T> left, List<T> right, Comparator<T> comparator) {
-        List<T> result = new ArrayList<>();
+    private List<Character> merge(List<Character> left, List<Character> right, Comparator<Character> comparator) {
+        List<Character> result = new ArrayList<>();
         int i = 0, j = 0;
 
         while (i < left.size() && j < right.size()) {
             int cmp = comparator.compare(left.get(i), right.get(j));
 
-            if (cmp <= 0) result.add(left.get(i++));
-            else result.add(right.get(j++));
+            if (cmp <= 0) {
+                result.add(left.get(i++));
+            } else result.add(right.get(j++));
         }
 
         while (i < left.size()) {

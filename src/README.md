@@ -12,6 +12,8 @@
 ## Package Responsibility
 - `controller`
   - `GameController`: main app flow.
+- `orchestration`
+  - `GameEngine`, `BattleFieldService`: use-case orchestration flow.
 - `validation.syntax`
   - `CliParser`, `ParseReport`, `FieldStatus`.
 - `validation.semantic`
@@ -21,9 +23,7 @@
 - `creation.model` and `creation.model.character`
   - Game entities and troop types.
 - `sorting` and `sorting.algorithms`
-  - Sorting contracts, observer, context, factory, `BattleFieldService`, and algorithm implementations.
-- `service`
-  - Orchestration service (`GameEngine`).
+  - Sorting contracts, observer, context, factory, and algorithm implementations.
 - `view`
   - Console rendering (`BattleFieldView`).
 

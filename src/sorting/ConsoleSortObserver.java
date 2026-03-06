@@ -4,7 +4,7 @@ import creation.model.character.Character;
 
 import java.util.List;
 
-public class ConsoleSortObserver<T extends Character> {
+public class ConsoleSortObserver {
 
     private final int interval;
     private final String type;
@@ -16,7 +16,7 @@ public class ConsoleSortObserver<T extends Character> {
         this.steps = 0;
     }
 
-    public void showStep(List<T> state) {
+    public void notifyStep(List<Character> state) {
         steps++;
         if (steps % interval == 0) {
             printTroops(state);
@@ -28,10 +28,10 @@ public class ConsoleSortObserver<T extends Character> {
         return steps;
     }
 
-    public void printTroops(List<T> troops) {
+    public void printTroops(List<Character> troops) {
         StringBuilder output = new StringBuilder("[");
         for (int i = 0; i < troops.size(); i++) {
-            T troop = troops.get(i);
+            Character troop = troops.get(i);
             if ("n".equals(type)) {
                 output.append(troop.getValue());
             } else {

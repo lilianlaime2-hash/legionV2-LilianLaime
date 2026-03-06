@@ -24,7 +24,7 @@ public class TroopFactory {
             int amount = units[i];
 
             for (int j = 0; j < amount; j++) {
-                int value = type.getMin() + j; //
+                int value = type.getMin(); //
                 troops.add(create(type, value));
             }
         }

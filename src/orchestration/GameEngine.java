@@ -1,11 +1,10 @@
-package service;
+package orchestration;
 
 import creation.TroopFactory;
 import creation.TroopPlacer;
 import creation.model.BattleField;
 import creation.model.character.Character;
 import creation.model.GameConfig;
-import sorting.BattleFieldService;
 import sorting.CharacterComparator;
 import sorting.SortStrategy;
 import sorting.SortStrategyFactory;
@@ -48,21 +47,20 @@ public class GameEngine {
     }
 
     public double sortBattleField(BattleField battleField, GameConfig config) {
+        SortingContext context = prepareSortingContext(config);
 
-        SortStrategy<Character> sortStrategy = strategyFactory.createSortStrategy(config.getAlgorithm());
+        long startTime = System.nanoTime();
+        battleFieldService.sort(battleField, context, config.getType());
+        long endTime = System.nanoTime();
 
+        return (endTime - startTime) / 1_000_000_000.0;
+    }
+
+    private SortingContext prepareSortingContext(GameConfig config) {
+        SortStrategy strategy = strategyFactory.createSortStrategy(config.getAlgorithm());
         Comparator<Character> comparator = new CharacterComparator();
 
-        SortingContext<Character> context =
-                new SortingContext<>(
-                        sortStrategy,
-                        comparator,
-                        config.getOrientation());
-
-        long start = System.nanoTime();
-
-        battleFieldService.sort(battleField, context, config.getType());
-
-        return (System.nanoTime() - start) / 1_000_000_000.0;
+        return new SortingContext(strategy, comparator, config.getOrientation()
+        );
     }
 }

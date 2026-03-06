@@ -7,14 +7,14 @@ import sorting.SortStrategy;
 import java.util.Comparator;
 import java.util.List;
 
-public class BubbleSort<T extends Character> implements SortStrategy<T> {
+/**
+ * Reference source: https://www.geeksforgeeks.org/bubble-sort-algorithm/
+ * Implementation adapted for this project (Character types, comparator, and observer).
+ */
+public class BubbleSort implements SortStrategy {
 
     @Override
-    public void sort(
-            List<T> list,
-            Comparator<T> comparator,
-            ConsoleSortObserver<T> observer
-    ) {
+    public void sort(List<Character> list, Comparator<Character> comparator, ConsoleSortObserver observer) {
         int n = list.size();
         boolean swapped;
 
@@ -25,11 +25,11 @@ public class BubbleSort<T extends Character> implements SortStrategy<T> {
                 int cmp = comparator.compare(list.get(j), list.get(j + 1));
 
                 if (cmp > 0) {
-                    T tmp = list.get(j);
+                    Character tmp = list.get(j);
                     list.set(j, list.get(j + 1));
                     list.set(j + 1, tmp);
                     swapped = true;
-                    observer.showStep(list);
+                    observer.notifyStep(list);
                 }
             }
 

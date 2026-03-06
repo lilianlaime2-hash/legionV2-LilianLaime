@@ -1,8 +1,8 @@
 import controller.GameController;
 import creation.TroopFactory;
 import creation.TroopPlacer;
-import service.GameEngine;
-import sorting.BattleFieldService;
+import orchestration.BattleFieldService;
+import orchestration.GameEngine;
 import sorting.SortStrategyFactory;
 import validation.semantic.BattleFieldValidator;
 import validation.syntax.CliParser;
