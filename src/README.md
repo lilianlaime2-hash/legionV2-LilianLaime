@@ -78,6 +78,11 @@
   - `ConsoleSortObserver`: handles `InterruptedException` on step delay.
   - `Algorithm` / `Orientation`: throw `IllegalArgumentException` for invalid abbreviations.
 
+## Algorithms
+Sources:
+https://www.geeksforgeeks.org/dsa/bubble-sort-algorithm/
+
+
 ## Diagrams
 - Detailed class diagrams by phase:
   - `CLASS_DIAGRAM.md`
