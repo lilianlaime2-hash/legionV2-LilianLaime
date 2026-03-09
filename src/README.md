@@ -1,7 +1,7 @@
 # README
 
 ## Execution Flow
-![ProjectPhases](../ProjectPhases.jpg)
+![ProjectPhases](../ClassDIagramPicture/ProjectPhases.jpg)
 
 
 1. `controller`: receives CLI arguments and coordinates the flow.
