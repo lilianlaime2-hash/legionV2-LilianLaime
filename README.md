@@ -29,26 +29,6 @@ This project simulates troop creation, validation, battlefield placement, sortin
 - `TroopPlacer.placeSorted(...)` places sorted troops back by orientation.
 - `GameEngine` measures total sorting time.
 
-## Class Diagrams
-![Phase1](ClassDIagramPicture/1raPhase.png)
-![Phase2](ClassDIagramPicture/2ndPhase.png)
-![Phase3](ClassDIagramPicture/3thPhase.png)
-![GeneralClassDiagram](ClassDIagramPicture/GeneralClassDiagram.png)
-
-## Sorting Algorithms
-![BubbleSort](AlgortthmsPictures/Bubble%20Sort.png)
-![InsertionSort](AlgortthmsPictures/insertion-sort.png)
-![MergeSort](AlgortthmsPictures/MergueSort.png)
-![QuickSort](AlgortthmsPictures/QUickSort.png)
-
-Sources:
-https://www.geeksforgeeks.org/dsa/bubble-sort-algorithm/
-
-## Execution Screenshots
-![Screenshot-1](Screenshot%20from%202026-03-08%2020-30-32.png)
-![Screenshot-2](Screenshot%20from%202026-03-08%2020-30-38.png)
-![Screenshot-3](Screenshot%20from%202026-03-08%2020-30-43.png)
-
 ## Applied Principles and Patterns
 - Patterns:
   - `Factory`: `TroopFactory`
@@ -62,13 +42,66 @@ https://www.geeksforgeeks.org/dsa/bubble-sort-algorithm/
   - Abstraction, Inheritance, Polymorphism, Encapsulation
   - Enums: `Algorithm`, `Orientation`, `TroopType`, `FieldStatus`
   - Composition/Aggregation in battlefield and orchestration classes
-- SOLID (current status):
-  - `SRP`: mostly applied
-  - `OCP`: partial (strong in strategy, weaker in switch-based factories)
-  - `LSP`: applied in `Character` hierarchy and sorting strategies
-  - `ISP`: minimal but adequate for current scope
-  - `DIP`: partial (stronger in sorting abstractions)
+- SOLID:
+  - `SRP`:
+    - `CliParser` focuses on syntax validation.
+    - `BattleFieldValidator` focuses on semantic validation.
+    - `TroopPlacer` focuses on troop placement (`random` and `sorted`).
+    - `BattleFieldView` focuses on rendering/printing the battlefield.
+    - `GameEngine` and `BattleFieldService` orchestrate game operations.
+    - `GameController` orchestrates the full application flow.
+  - `OCP`:
+    - New sorting algorithms can be added through `SortStrategy` implementations (`BubbleSort`, `InsertionSort`, `MergeSort`, `QuickSort`) without changing `SortingContext` and `BattleFieldService`.
+    - New troop variants can be represented through the `Character` hierarchy.
+  - `LSP`:
+    - `Character` subclasses are used polymorphically through `Character`.
+    - Sorting strategies are substitutable through `SortStrategy`.
+  - `ISP`:
+    - `SortStrategy` exposes only the common behavior (`sort`) needed by all sorting implementations.
+  - `DIP`:
+    - Sorting flow depends on abstractions (`SortStrategy`, `Comparator<Character>`), not on a specific algorithm implementation.
+    - Constructor-based dependency wiring in `Main` keeps orchestration classes decoupled from object creation details.
 - Exception handling:
   - `try/catch` in parser and observer
   - `IllegalArgumentException` for invalid enum abbreviations
-- Enums and interfaces also were using
+
+## Visuals
+
+### Class Diagrams
+#### Phase 1 Diagram
+![Phase1](ClassDIagramPicture/1raPhase.png)
+
+#### Phase 2 Diagram
+![Phase2](ClassDIagramPicture/2ndPhase.png)
+
+#### Phase 3 Diagram
+![Phase3](ClassDIagramPicture/3thPhase.png)
+
+#### General Class Diagram
+![GeneralClassDiagram](ClassDIagramPicture/GeneralClassDiagram.png)
+
+### Sorting Algorithms
+#### Bubble Sort
+![BubbleSort](AlgortthmsPictures/Bubble%20Sort.png)
+
+#### Insertion Sort
+![InsertionSort](AlgortthmsPictures/insertion-sort.png)
+
+#### Merge Sort
+![MergeSort](AlgortthmsPictures/MergueSort.png)
+
+#### Quick Sort
+![QuickSort](AlgortthmsPictures/QUickSort.png)
+
+Sources:
+https://www.geeksforgeeks.org/dsa/bubble-sort-algorithm/
+
+### Execution Screenshots
+#### Execution 1
+![Screenshot-1](Screenshot%20from%202026-03-08%2020-30-32.png)
+
+#### Execution 2
+![Screenshot-2](Screenshot%20from%202026-03-08%2020-30-38.png)
+
+#### Execution 3
+![Screenshot-3](Screenshot%20from%202026-03-08%2020-30-43.png)
