@@ -2,9 +2,9 @@ package creation.model;
 
 public enum Orientation {
     NORTH("n", "North"),
-    SOUTH("s", "Sud"),
+    SOUTH("s", "South"),
     EAST("e", "East"),
-    WEST("w", "west");
+    WEST("w", "West");
 
     private final String abbreviation;
     private final String longName;

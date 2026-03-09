@@ -16,26 +16,27 @@ public class InsertionSort implements SortStrategy {
 
     @Override
     public void sort (List<Character> list, Comparator<Character> comparator, ConsoleSortObserver observer) {
-        int n = list.size();
+       int n = list.size();
 
-        for (int i = 1; i < n; i++){
-            Character key = list.get(i);
-            int j = i - 1;
+       for (int i = 1; i < n; i++){
+           Character key = list.get(i);
+           int j = i - 1;
 
-            while (j >= 0) {
-                int cmp = comparator.compare(list.get(j), key);
-                if (cmp <= 0) break;
+           while (j >= 0){
+               int cmp = comparator.compare(list.get(j), key);
+               if (cmp > 0){
+                   break;
+               }
+               list.set(j + 1, list.get(j));
+               j--;
+               observer.notifyStep(list);
+           }
 
-                list.set(j+1, list.get(j));
-                j--;
-
-            }
-
-            int targetIndex = j + 1;
-            if (targetIndex != i) {
-                list.set(targetIndex, key);
-                observer.notifyStep(list);
-            }
-        }
+           int targetIndex = j + 1;
+           if (targetIndex != i){
+               list.set(targetIndex, key);
+               observer.notifyStep(list);
+           }
+       }
     }
 }

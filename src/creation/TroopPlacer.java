@@ -32,22 +32,22 @@ public class TroopPlacer {
         battleField.clear();
 
         TroopType previousType = troops.get(0).getType();
-        int currentLine = 0;
+        int line = 0;
         int positionInLine = 0;
         int size = battleField.getSize();
 
         for (Character troop : troops) {
             boolean lineIsFull = positionInLine >= size;
             if (lineIsFull) {
-                currentLine++;
+                line++;
                 positionInLine = 0;
             }
 
             boolean isDifferentTroopType = troop.getType() != previousType;
             if (isDifferentTroopType) {
-                boolean isCurrentLineBusy = positionInLine != 0;
-                if (isCurrentLineBusy) {
-                    currentLine++;
+                boolean isLineBusy = positionInLine != 0;
+                if (isLineBusy) {
+                    line++;
                 }
                 positionInLine = 0;
                 previousType = troop.getType();
@@ -59,18 +59,18 @@ public class TroopPlacer {
             switch (orientation) {
                 case EAST:
                     targetRow = (size - 1) - positionInLine;
-                    targetCol = currentLine;
+                    targetCol = line;
                     break;
                 case WEST:
                     targetRow = (size - 1) - positionInLine;
-                    targetCol = (size - 1) - currentLine;
+                    targetCol = (size - 1) - line;
                     break;
                 case NORTH:
-                    targetRow = (size - 1) - currentLine;
+                    targetRow = (size - 1) - line;
                     targetCol = positionInLine;
                     break;
                 case SOUTH:
-                    targetRow = currentLine;
+                    targetRow = line;
                     targetCol = positionInLine;
                     break;
             }

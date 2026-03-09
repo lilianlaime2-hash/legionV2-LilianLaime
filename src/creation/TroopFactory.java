@@ -33,7 +33,8 @@ public class TroopFactory {
     }
 
     private Character create(TroopType type, int value) {
-        return switch (type) {
+
+        return switch (type){
             case COMMANDER -> new Commander(value);
             case MEDIC -> new Medic(value);
             case TANK -> new Tank(value);

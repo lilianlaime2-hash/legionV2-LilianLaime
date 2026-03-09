@@ -20,10 +20,7 @@ public class GameEngine {
     private final SortStrategyFactory strategyFactory;
     private final BattleFieldService battleFieldService;
 
-    public GameEngine(
-            TroopFactory troopFactory,
-            TroopPlacer troopPlacer,
-            SortStrategyFactory strategyFactory,
+    public GameEngine(TroopFactory troopFactory, TroopPlacer troopPlacer, SortStrategyFactory strategyFactory,
             BattleFieldService battleFieldService) {
 
         this.troopFactory = troopFactory;
@@ -38,10 +35,7 @@ public class GameEngine {
 
         BattleField battleField = new BattleField(config.getFieldSize());
 
-        troopPlacer.placeRandom(
-                battleField,
-                troops,
-                config.getFieldSize());
+        troopPlacer.placeRandom(battleField, troops, config.getFieldSize());
 
         return battleField;
     }

@@ -12,7 +12,7 @@ import java.util.List;
 
 public class BattleFieldService {
 
-    private static final int STEP_PRINT_INTERVAL = 1;
+    private static final int STEP_PRINT_INTERVAL = 2;
     private final TroopPlacer troopPlacer;
 
     public BattleFieldService(TroopPlacer troopPlacer) {
@@ -25,7 +25,6 @@ public class BattleFieldService {
         ConsoleSortObserver observer = new ConsoleSortObserver(STEP_PRINT_INTERVAL, type);
 
         System.out.println("\nSorting steps:");
-
         observer.printTroops(troops);
 
         context.getStrategy().sort(troops, context.getComparator(), observer);
@@ -39,18 +38,19 @@ public class BattleFieldService {
     }
 
     private List<Character> extractTroops(BattleField battleField) {
-
         List<Character> troops = new ArrayList<>();
+
         int size = battleField.getSize();
 
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        for (int i = 0; i < size; i++){
+            for (int j = 0; j < size; j++){
 
-                Cell cell = battleField.getCell(i, j);
-                if (!cell.isEmpty()) troops.add(cell.getCharacter());
+                Cell cell = battleField.getCell(i,j);
+                if (!cell.isEmpty()){
+                    troops.add(cell.getCharacter());
+                }
             }
         }
-
         return troops;
     }
 
