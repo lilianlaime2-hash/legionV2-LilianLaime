@@ -115,3 +115,6 @@ This project simulates troop creation, validation, battlefield placement, sortin
 
 Sources:
 https://www.geeksforgeeks.org/dsa/bubble-sort-algorithm/
+
+## Project Flow in Detail
+![ProjectFlow](ClassDIagramPicture/ProjectFlow.png)
