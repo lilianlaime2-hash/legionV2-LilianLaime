@@ -1,106 +1,79 @@
 # README
 
+## Project Overview
+This project simulates troop creation, validation, battlefield placement, sorting, and final deployment by orientation.
+
 ## Execution Flow
-![ProjectPhases](../ClassDIagramPicture/ProjectPhases.jpg)
-![ProjectPhasesCopy](../ClassDIagramPicture/ProjectPhases.jpg)
-![GeneralClassDiagram](../ClassDIagramPicture/GeneralClassDiagram.png)
-![Phase1](../ClassDIagramPicture/1raPhase.png)
-![Phase2](../ClassDIagramPicture/2ndPhase.png)
-![Phase3](../ClassDIagramPicture/3thPhase.png)
-![BubbleSort](../AlgortthmsPictures/Bubble%20Sort.png)
-![InsertionSort](../AlgortthmsPictures/insertion-sort.png)
-![MergeSort](../AlgortthmsPictures/MergueSort.png)
-![QuickSort](../AlgortthmsPictures/QUickSort.png)
-![Screenshot-1](../Screenshot%20from%202026-03-08%2020-30-32.png)
-![Screenshot-2](../Screenshot%20from%202026-03-08%2020-30-38.png)
-![Screenshot-3](../Screenshot%20from%202026-03-08%2020-30-43.png)
-
-
 1. `controller`: receives CLI arguments and coordinates the flow.
 2. `validation`: validates syntax and semantics.
 3. `creation`: creates troops and the initial battlefield state.
 4. `sorting`: sorts troops and applies the final formation.
-5. `view`: prints initial state, intermediate steps, and final state.
+5. `view`: prints initial state, sorting steps, and final state.
 
-## Three-Phase Summary (Key Points)
+## Project Phases (Visual)
+![ProjectPhases](../ClassDIagramPicture/ProjectPhases.jpg)
+![ProjectPhasesCopy](../ClassDIagramPicture/ProjectPhases.jpg)
+
+## Three-Phase Summary
 ### Phase 1: Validation (Syntax + Semantics)
-- `CliParser` performs syntax/format validation based on input rules (`algorithm`, `type`, `orientation`, `units`, `battlefield size`).
-- Parsing converts raw strings into domain types (`Algorithm`, `Orientation`, `int[]`, `int`) and builds `GameConfig`.
-- `ParseReport` stores both parsed config and per-field status (`VALID`, `INVALID`, `NOT_PRESENT`).
-- `BattleFieldValidator` performs semantic checks:
-  - total troops must fit battlefield area (`N x N`);
-  - troop distribution must fit separate lines per troop type.
+- `CliParser` validates input format (`algorithm`, `type`, `orientation`, `units`, `field size`) and parses values into domain types.
+- `ParseReport` stores both parsed config (`GameConfig`) and status per field (`VALID`, `INVALID`, `NOT_PRESENT`).
+- `BattleFieldValidator` checks business rules:
+  - troops must fit battlefield area (`N x N`),
+  - troop types must fit line constraints.
 
 ### Phase 2: Initial Battlefield State
-- `TroopFactory` creates troop instances (`COMMANDER`, `MEDIC`, `TANK`, `SNIPER`, `INFANTRY`).
+- `TroopFactory` creates troop instances.
 - `BattleField` is created as an empty matrix.
 - `TroopPlacer.placeRandom(...)` places troops randomly.
 - `BattleFieldView` prints the initial state.
 
 ### Phase 3: Sorting + Final State
-- Troops are extracted from matrix (`BattleField`) to `List<Character>`.
+- Troops are extracted from matrix to `List<Character>`.
 - Sorting is delegated through `SortStrategy` (Strategy pattern).
-- `ConsoleSortObserver` reports visible sorting steps.
-- Sorted troops are placed back into the matrix using orientation-aware coordinate logic (`placeSorted(...)`).
-- Execution time is measured in `GameEngine.sortBattleField(...)` and shown in seconds.
+- `ConsoleSortObserver` prints visible sorting steps.
+- `TroopPlacer.placeSorted(...)` places sorted troops back by orientation.
+- `GameEngine` measures total sorting time.
 
-## Package Responsibilities
-- `controller`
-  - `GameController`: orchestrates the end-to-end use case.
-- `orchestration`
-  - `GameEngine`: creates the field and prepares/executes sorting.
-  - `BattleFieldService`: extracts troops, sorts, and places them back.
-- `validation.syntax`
-  - `CliParser`, `ParseReport`, `FieldStatus`.
-- `validation.semantic`
-  - `BattleFieldValidator`.
-- `creation`
-  - `TroopFactory`, `TroopPlacer`.
-- `creation.model` and `creation.model.character`
-  - Domain entities (`BattleField`, `Cell`, `Character`, subtypes, enums).
-- `sorting` and `sorting.algorithms`
-  - Strategy contract, context, comparator, observer, factory, and algorithms.
-- `view`
-  - `BattleFieldView`: console output.
+## Class Diagrams (Visual)
+![GeneralClassDiagram](../ClassDIagramPicture/GeneralClassDiagram.png)
+![Phase1](../ClassDIagramPicture/1raPhase.png)
+![Phase2](../ClassDIagramPicture/2ndPhase.png)
+![Phase3](../ClassDIagramPicture/3thPhase.png)
+
+Detailed Mermaid diagrams by phase:
+- `CLASS_DIAGRAM.md`
+
+## Sorting Algorithms (Visual)
+![BubbleSort](../AlgortthmsPictures/Bubble%20Sort.png)
+![InsertionSort](../AlgortthmsPictures/insertion-sort.png)
+![MergeSort](../AlgortthmsPictures/MergueSort.png)
+![QuickSort](../AlgortthmsPictures/QUickSort.png)
+
+## Execution Screenshots
+![Screenshot-1](../Screenshot%20from%202026-03-08%2020-30-32.png)
+![Screenshot-2](../Screenshot%20from%202026-03-08%2020-30-38.png)
+![Screenshot-3](../Screenshot%20from%202026-03-08%2020-30-43.png)
 
 ## Applied Principles and Patterns
 - Patterns:
-  - `Factory`: `TroopFactory`.
-  - `Strategy`: `SortStrategy` + algorithms (`BubbleSort`, `InsertionSort`, `MergeSort`, `QuickSort`).
+  - `Factory`: `TroopFactory`
+  - `Strategy`: `SortStrategy` + algorithm implementations
 - Data structures:
-  - `HashMap`: parser input map + validation status map.
-  - `int[]`: troop counts from input.
-  - `List<Character>`: sortable troop collection extracted from the matrix.
-  - `Cell[][]`: battlefield matrix.
+  - `HashMap`: parser values and validation statuses
+  - `int[]`: troop counts
+  - `List<Character>`: sortable troop sequence
+  - `Cell[][]`: battlefield matrix
 - OOP:
-  - `Abstraction`: abstract `Character` and `SortStrategy` interface.
-  - `Inheritance`: `Character` subtypes.
-  - `Polymorphism`: use of `SortStrategy` and `List<Character>`.
-  - `Encapsulation`: private/final fields and controlled access.
-  - `Enums`: `Algorithm`, `Orientation`, `TroopType`, `FieldStatus`.
-  - `Composition/Aggregation`: `BattleField` -> `Cell[][]`, `Cell` -> `Character`, orchestrator classes with constructor-injected dependencies.
+  - Abstraction, Inheritance, Polymorphism, Encapsulation
+  - Enums: `Algorithm`, `Orientation`, `TroopType`, `FieldStatus`
+  - Composition/Aggregation in battlefield and orchestration classes
 - SOLID (current status):
-  - `SRP`: mostly well applied across classes (parser, validator, factory, placer, view, strategies).
-  - `OCP`: applied in sorting strategy; partial in `switch`/`enum`-based factories.
-  - `LSP`: `Character` subtypes and sorting strategies are substitutable.
-  - `ISP`: not a strong focus at this project size (mainly `SortStrategy` interface).
-  - `DIP`: partial; stronger in sorting module (abstractions), weaker where controller/engine depend on concrete classes.
+  - `SRP`: mostly applied
+  - `OCP`: partial (strong in strategy, weaker in switch-based factories)
+  - `LSP`: applied in `Character` hierarchy and sorting strategies
+  - `ISP`: minimal but adequate for current scope
+  - `DIP`: partial (stronger in sorting abstractions)
 - Exception handling:
-  - `CliParser`: `try/catch` for parsing algorithm, orientation, units, and field size.
-  - `ConsoleSortObserver`: handles `InterruptedException` on step delay.
-  - `Algorithm` / `Orientation`: throw `IllegalArgumentException` for invalid abbreviations.
-
-## Algorithms
-Sources:
-https://www.geeksforgeeks.org/dsa/bubble-sort-algorithm/
-
-
-## Diagrams
-- Detailed class diagrams by phase:
-  - `CLASS_DIAGRAM.md`
-
-## Visual Evidence
-![Screenshot from 2026-02-22 23-10-34.png](../Screenshot from 2026-03-08 20-30-32.png)
-![Screenshot from 2026-02-22 23-11-18.png](../Screenshot from 2026-03-08 20-30-38.png)
-![Screenshot from 2026-02-22 23-11-](../Screenshot from 2026-03-08 20-30-43.png)
-![ClassDiagram.png](../ClassDiagram.png)
+  - `try/catch` in parser and observer
+  - `IllegalArgumentException` for invalid enum abbreviations
