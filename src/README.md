@@ -2,6 +2,18 @@
 
 ## Execution Flow
 ![ProjectPhases](../ClassDIagramPicture/ProjectPhases.jpg)
+![ProjectPhasesCopy](../ClassDIagramPicture/ProjectPhases.jpg)
+![GeneralClassDiagram](../ClassDIagramPicture/GeneralClassDiagram.png)
+![Phase1](../ClassDIagramPicture/1raPhase.png)
+![Phase2](../ClassDIagramPicture/2ndPhase.png)
+![Phase3](../ClassDIagramPicture/3thPhase.png)
+![BubbleSort](../AlgortthmsPictures/Bubble%20Sort.png)
+![InsertionSort](../AlgortthmsPictures/insertion-sort.png)
+![MergeSort](../AlgortthmsPictures/MergueSort.png)
+![QuickSort](../AlgortthmsPictures/QUickSort.png)
+![Screenshot-1](../Screenshot%20from%202026-03-08%2020-30-32.png)
+![Screenshot-2](../Screenshot%20from%202026-03-08%2020-30-38.png)
+![Screenshot-3](../Screenshot%20from%202026-03-08%2020-30-43.png)
 
 
 1. `controller`: receives CLI arguments and coordinates the flow.
