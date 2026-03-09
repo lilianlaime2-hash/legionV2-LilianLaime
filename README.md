@@ -39,7 +39,7 @@ This project simulates troop creation, validation, battlefield placement, sortin
   - `List<Character>`: sortable troop sequence
   - `Cell[][]`: battlefield matrix
 - OOP:
-  - Polymorphism (different forms):
+  - Polymorphism:
     - each sorting algorithm behaves differently (`BubbleSort`, `InsertionSort`, `MergeSort`, `QuickSort`)
     - `Comparator.compare(...)` is used as a common comparison contract
   - Encapsulation:
