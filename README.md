@@ -32,14 +32,24 @@ This project simulates troop creation, validation, battlefield placement, sortin
 ## Applied Principles and Patterns
 - Patterns:
   - `Factory`: `TroopFactory`
-  - `Strategy`: `SortStrategy` + algorithm implementations
+  - `Strategy`: `SortStrategy`
 - Data structures:
   - `HashMap`: parser values and validation statuses
   - `int[]`: troop counts
   - `List<Character>`: sortable troop sequence
   - `Cell[][]`: battlefield matrix
 - OOP:
-  - Abstraction, Inheritance, Polymorphism, Encapsulation
+  - Polymorphism (different forms):
+    - each sorting algorithm behaves differently (`BubbleSort`, `InsertionSort`, `MergeSort`, `QuickSort`)
+    - `Comparator.compare(...)` is used as a common comparison contract
+  - Encapsulation:
+    - private attributes with controlled access through getters/setters
+    - private helper methods encapsulate internal logic
+  - Abstraction:
+    - abstract class `Character` defines common behavior (`getValue`, `getType`) without direct instantiation
+    - implementation details are hidden behind shared contracts
+  - Inheritance:
+    - `Commander`, `Medic`, `Tank`, `Sniper`, `Infantry` inherit attributes and behavior from `Character`
   - Enums: `Algorithm`, `Orientation`, `TroopType`, `FieldStatus`
   - Composition/Aggregation in battlefield and orchestration classes
 - SOLID:
@@ -47,25 +57,35 @@ This project simulates troop creation, validation, battlefield placement, sortin
     - `CliParser` focuses on syntax validation.
     - `BattleFieldValidator` focuses on semantic validation.
     - `TroopPlacer` focuses on troop placement (`random` and `sorted`).
-    - `BattleFieldView` focuses on rendering/printing the battlefield.
-    - `GameEngine` and `BattleFieldService` orchestrate game operations.
+    - `BattleFieldView` focuses on printing the battlefield.
+    - `GameEngine` and `BattleFieldService` orchestration.
     - `GameController` orchestrates the full application flow.
   - `OCP`:
     - New sorting algorithms can be added through `SortStrategy` implementations (`BubbleSort`, `InsertionSort`, `MergeSort`, `QuickSort`) without changing `SortingContext` and `BattleFieldService`.
     - New troop variants can be represented through the `Character` hierarchy.
   - `LSP`:
-    - `Character` subclasses are used polymorphically through `Character`.
     - Sorting strategies are substitutable through `SortStrategy`.
   - `ISP`:
     - `SortStrategy` exposes only the common behavior (`sort`) needed by all sorting implementations.
   - `DIP`:
     - Sorting flow depends on abstractions (`SortStrategy`, `Comparator<Character>`), not on a specific algorithm implementation.
-    - Constructor-based dependency wiring in `Main` keeps orchestration classes decoupled from object creation details.
 - Exception handling:
   - `try/catch` in parser and observer
   - `IllegalArgumentException` for invalid enum abbreviations
 
+
 ## Visuals
+
+### Execution Screenshots
+#### Execution 1
+![Screenshot-1](Screenshot%20from%202026-03-08%2020-30-32.png)
+
+#### Execution 2
+![Screenshot-2](Screenshot%20from%202026-03-08%2020-30-38.png)
+
+#### Execution 3
+![Screenshot-3](Screenshot%20from%202026-03-08%2020-30-43.png)
+
 
 ### Class Diagrams
 #### Phase 1 Diagram
@@ -95,13 +115,3 @@ This project simulates troop creation, validation, battlefield placement, sortin
 
 Sources:
 https://www.geeksforgeeks.org/dsa/bubble-sort-algorithm/
-
-### Execution Screenshots
-#### Execution 1
-![Screenshot-1](Screenshot%20from%202026-03-08%2020-30-32.png)
-
-#### Execution 2
-![Screenshot-2](Screenshot%20from%202026-03-08%2020-30-38.png)
-
-#### Execution 3
-![Screenshot-3](Screenshot%20from%202026-03-08%2020-30-43.png)
