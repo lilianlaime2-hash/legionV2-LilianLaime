@@ -1,18 +1,12 @@
 # README
 
+Lilian Laime Lucero
+
 ## Project Overview
 This project simulates troop creation, validation, battlefield placement, sorting, and final deployment by orientation.
 
-## Execution Flow
-1. `controller`: receives CLI arguments and coordinates the flow.
-2. `validation`: validates syntax and semantics.
-3. `creation`: creates troops and the initial battlefield state.
-4. `sorting`: sorts troops and applies the final formation.
-5. `view`: prints initial state, sorting steps, and final state.
-
-## Project Phases (Visual)
-![ProjectPhases](../ClassDIagramPicture/ProjectPhases.jpg)
-![ProjectPhasesCopy](../ClassDIagramPicture/ProjectPhases.jpg)
+## Project Phases
+![ProjectPhases](ClassDIagramPicture/ProjectPhases.jpg)
 
 ## Three-Phase Summary
 ### Phase 1: Validation (Syntax + Semantics)
@@ -35,25 +29,25 @@ This project simulates troop creation, validation, battlefield placement, sortin
 - `TroopPlacer.placeSorted(...)` places sorted troops back by orientation.
 - `GameEngine` measures total sorting time.
 
-## Class Diagrams (Visual)
-![GeneralClassDiagram](../ClassDIagramPicture/GeneralClassDiagram.png)
-![Phase1](../ClassDIagramPicture/1raPhase.png)
-![Phase2](../ClassDIagramPicture/2ndPhase.png)
-![Phase3](../ClassDIagramPicture/3thPhase.png)
+## Class Diagrams
+![Phase1](ClassDIagramPicture/1raPhase.png)
+![Phase2](ClassDIagramPicture/2ndPhase.png)
+![Phase3](ClassDIagramPicture/3thPhase.png)
+![GeneralClassDiagram](ClassDIagramPicture/GeneralClassDiagram.png)
 
-Detailed Mermaid diagrams by phase:
-- `CLASS_DIAGRAM.md`
+## Sorting Algorithms
+![BubbleSort](AlgortthmsPictures/Bubble%20Sort.png)
+![InsertionSort](AlgortthmsPictures/insertion-sort.png)
+![MergeSort](AlgortthmsPictures/MergueSort.png)
+![QuickSort](AlgortthmsPictures/QUickSort.png)
 
-## Sorting Algorithms (Visual)
-![BubbleSort](../AlgortthmsPictures/Bubble%20Sort.png)
-![InsertionSort](../AlgortthmsPictures/insertion-sort.png)
-![MergeSort](../AlgortthmsPictures/MergueSort.png)
-![QuickSort](../AlgortthmsPictures/QUickSort.png)
+Sources:
+https://www.geeksforgeeks.org/dsa/bubble-sort-algorithm/
 
 ## Execution Screenshots
-![Screenshot-1](../Screenshot%20from%202026-03-08%2020-30-32.png)
-![Screenshot-2](../Screenshot%20from%202026-03-08%2020-30-38.png)
-![Screenshot-3](../Screenshot%20from%202026-03-08%2020-30-43.png)
+![Screenshot-1](Screenshot%20from%202026-03-08%2020-30-32.png)
+![Screenshot-2](Screenshot%20from%202026-03-08%2020-30-38.png)
+![Screenshot-3](Screenshot%20from%202026-03-08%2020-30-43.png)
 
 ## Applied Principles and Patterns
 - Patterns:
@@ -77,3 +71,4 @@ Detailed Mermaid diagrams by phase:
 - Exception handling:
   - `try/catch` in parser and observer
   - `IllegalArgumentException` for invalid enum abbreviations
+- Enums and interfaces also were using
