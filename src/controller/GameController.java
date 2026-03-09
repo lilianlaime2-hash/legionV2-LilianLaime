@@ -42,15 +42,18 @@ public class GameController {
 
         if (!validator.validateCapacity(config)) return;
 
+
         BattleField battleField = gameEngine.createBattleField(config);
 
         System.out.println("\nInitial Position:");
         view.print(battleField, config.getType());
 
-        double sortingSeconds = gameEngine.sortBattleField(battleField, config);
-        System.out.println("\nFinal Position:");
 
+        double sortingSeconds = gameEngine.sortBattleField(battleField, config);
+
+        System.out.println("\nFinal Position:");
         view.print(battleField, config.getType());
+
         System.out.printf("Sorting time: %.3f s", sortingSeconds);
     }
 }

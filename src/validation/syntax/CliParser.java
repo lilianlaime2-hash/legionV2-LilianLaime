@@ -106,23 +106,26 @@ public class CliParser {
     }
 
     private int[] parseUnits() {
-        try {
-            String units = paramMap.get("u");
-            String[] troopsText = units.split(",");
-            int[] troops = new int[troopsText.length];
 
-            for (int i = 0; i < troopsText.length; i++) {
-                int troop = Integer.parseInt(troopsText[i].trim());
-                if (troop < 0) {
+        try {
+            String troops = paramMap.get("u");
+            String[] troopsText = troops.split(",");
+            int[] troopsInt = new int[troopsText.length];
+
+            for (int i = 0; i < troopsText.length; i++){
+                int parsedTroop = Integer.parseInt(troopsText[i].trim());
+
+                if(parsedTroop < 0){
                     statuses.put("u", FieldStatus.INVALID);
                     return null;
                 }
-                troops[i] = troop;
+                troopsInt[i] = parsedTroop;
             }
 
             statuses.put("u", FieldStatus.VALID);
-            return troops;
-        } catch (Exception ignored) {
+            return troopsInt;
+
+        } catch (Exception ignored){
             statuses.put("u", FieldStatus.INVALID);
             return null;
         }
@@ -130,16 +133,16 @@ public class CliParser {
 
     private int parseFieldSize(int defaultFieldSize) {
         try {
-            int fieldSize = Integer.parseInt(paramMap.get("f"));
-            if (fieldSize >= 5 && fieldSize <= 1000) {
+            String size = paramMap.get("f");
+            int parsedSize = Integer.parseInt(size);
+
+            if (parsedSize >= 5 && parsedSize <= 1000){
                 statuses.put("f", FieldStatus.VALID);
-                return fieldSize;
+                return parsedSize;
             }
+        } catch (Exception ignored){
             statuses.put("f", FieldStatus.INVALID);
-            return defaultFieldSize;
-        } catch (Exception ignored) {
-            statuses.put("f", FieldStatus.INVALID);
-            return defaultFieldSize;
         }
+        return defaultFieldSize;
     }
 }

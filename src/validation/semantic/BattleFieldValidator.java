@@ -32,9 +32,8 @@ public class BattleFieldValidator {
     private boolean troopsFitPerLine(GameConfig config) {
         int requiredLines = 0;
         for (int troopAmount : config.getUnits()) {
-            double linesNeeded = (double) troopAmount / config.getFieldSize();
-            int roundedLines = (int) Math.ceil(linesNeeded);
-            requiredLines += roundedLines;
+            int linesPerTroop = (int) Math.ceil((double) troopAmount / config.getFieldSize());
+            requiredLines += linesPerTroop;
         }
 
         if (requiredLines > config.getFieldSize()) {
