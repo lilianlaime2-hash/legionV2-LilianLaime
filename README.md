@@ -1,6 +1,7 @@
 # README
 
-Lilian Laime Lucero
+Lilian Laime Lucero. 
+This project is only for educational purposes.
 
 ## Project Overview
 This project simulates troop creation, validation, battlefield placement, sorting, and final deployment by orientation.
